@@ -1,0 +1,29 @@
+name: 'Build and Deploy: Working Dev Server'
+run-name: '${{github.actor}} is deploying'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy to DO droplet and rebuild
+              uses: appleboy/ssh-action@v0.1.3
+              with:
+                  host: ${{ secrets.DEPLOYER_HOST }}
+                  username: ${{ secrets.DEPLOYER_USERNAME }}
+                  key: ${{ secrets.SSH_KEY }}
+                  script: |
+                    cd AnkiLanguage
+                    git pull
+                    npm ci
+                    npm run build
+                    npm run start
+                    cd ..
+                    echo ${{secrets.DEPLOYER_PASSWORD}} | sudo -S pm2 restart pm2ecosystem.config.js
+                    echo ${{secrets.DEPLOYER_PASSWORD}} | sudo -S systemctl restart nginx -p ${{secrets.DEPLOYER_PASSWORD}}
