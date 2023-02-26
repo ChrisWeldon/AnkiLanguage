@@ -19,10 +19,11 @@ jobs:
                   username: ${{ secrets.DEPLOYER_USERNAME }}
                   key: ${{ secrets.SSH_KEY }}
                   script: |
+                    echo ${{secrets.DEPLOYER_PASSWORD}} | sudo -S pm2 stop pm2ecosystem.config.js
                     cd AnkiLanguage
                     git pull
                     npm ci
                     npm run build
                     cd ..
-                    echo ${{secrets.DEPLOYER_PASSWORD}} | sudo -S pm2 restart pm2ecosystem.config.js
+                    echo ${{secrets.DEPLOYER_PASSWORD}} | sudo -S pm2 start pm2ecosystem.config.js
                     echo ${{secrets.DEPLOYER_PASSWORD}} | sudo -S systemctl restart nginx -p ${{secrets.DEPLOYER_PASSWORD}}
