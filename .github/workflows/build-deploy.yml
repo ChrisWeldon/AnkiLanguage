@@ -23,5 +23,6 @@ jobs:
                     git pull
                     npm ci
                     npm run build
+                    cd ..
                     echo ${{secrets.DEPLOYER_PASSWORD}} | sudo -S pm2 restart pm2ecosystem.config.js
                     echo ${{secrets.DEPLOYER_PASSWORD}} | sudo -S systemctl restart nginx -p ${{secrets.DEPLOYER_PASSWORD}}
