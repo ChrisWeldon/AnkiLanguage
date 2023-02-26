@@ -23,6 +23,7 @@ jobs:
                     git pull
                     npm ci
                     npm run build
+                    echo ${{secrets.DEPLOYER_PASSWORD}} | sudo -S pm2 stop AnkiLanguage
                     npm run start
                     cd ..
                     echo ${{secrets.DEPLOYER_PASSWORD}} | sudo -S pm2 restart pm2ecosystem.config.js
