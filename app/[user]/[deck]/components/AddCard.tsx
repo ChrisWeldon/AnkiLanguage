@@ -99,9 +99,6 @@ export default function AddCard(
             />
     )
 
-    useEffect(() => {
-    })
-
 
     return (
         <li className="flex flex-row h-48 mb-5 px-1 my-1 text-3xl justify-between mt-4">
