@@ -3,13 +3,16 @@ run-name: '${{github.actor}} is deploying'
 
 on:
   workflow_dispatch:
+  pull_request:
+    types:
+      - closed
   push:
     branches:
       - master
-  pull_request:
 
 jobs:
     deploy:
+        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         steps:
             - name: Deploy to DO droplet and rebuild
