@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
+import Error from 'next/error'
 import type { SyntheticEvent } from 'react';
 import { DBTranslation } from '../../../../models/Translation';
 
@@ -26,6 +27,14 @@ export default function AddCard(
 
     const router = useRouter();
 
+    const API_ADDRESS = typeof window === 'undefined' ? 
+        process.env.API_ADDRESS_PRIVATE :
+        process.env.NEXT_PUBLIC_API_ADDRESS_PUBLIC;
+
+    if(API_ADDRESS === undefined){
+        return <Error statusCode={500}/>;
+    }
+
     const handleInputChange = (event: SyntheticEvent<{ value: string}>) => {
         let payload = {
             input: event.currentTarget.value,
@@ -37,7 +46,7 @@ export default function AddCard(
         setLatestSearch(latestSearch+1)
         const id = latestSearch
 
-        fetch("http://localhost:3000/api/t/", {
+        fetch(`${API_ADDRESS}/api/t/`, {
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/json'
@@ -61,7 +70,7 @@ export default function AddCard(
     // this is a closure to for low level handling
     const handleResultSelect = (result: Translation) => {
         return (event: SyntheticEvent<{}>) => {
-            fetch(`http://localhost:3000/api/u/${props.user}/d/${props.deck}/t/`, {
+            fetch(`${API_ADDRESS}/api/u/${props.user}/d/${props.deck}/t/`, {
                 cache: 'no-store',
                 headers: {
                     'Content-Type': 'application/json'
