@@ -23,9 +23,7 @@
 
 import path from 'path'
 import fs from 'fs'
-import { getLanguage, Language } from '../langs'
-
-const AnkiExport = require('anki-apkg-export').default;
+import AnkiExport from 'anki-apkg-export'
 
 // apkg.addMedia('anki.png', fs.readFileSync('anki.png'));
 
@@ -47,27 +45,17 @@ background-color: #FFFFFF;}
 `
 
 
-// TODO rewrite once WordRequestOptions gets fixed
 function article(word: string, request: WordRequestOptions,
-                 lang: 'input_lang' | 'target_lang' ,
-                 gender: string | undefined){
+                lang: 'target_lang' | 'input_lang' ,
+                gender: string | undefined){
 
     if(gender===undefined){
         return ""
     }
-    // this cast only works because we ensure language is found before all calls
-    //  wont last long like thi
-    
-    let languageObject = getLanguage(request[lang])
-    
-    if(!languageObject){
-        throw "Language Doesn't Exist";
-    }
-
-    if(languageObject.genders[gender] == undefined){
+    if(request[lang].genders[gender] == undefined){
         return '';
-    } 
-    return languageObject.genders[gender][request.article](word);
+    }
+    return request[lang].genders[gender][request.article](word);
 }
 
 function card(request: WordRequestOptions, style: string){
@@ -79,15 +67,15 @@ function card(request: WordRequestOptions, style: string){
             if( target[0] === undefined ){
                 return ""
             }
-            
+
             // FIXME: Indexing target
             return `<div class="card">
                 ${
                     target.map(( t ) => {
-                        return `${ target ? 
-                            article(t.text, request, 'target_lang', target[0].gender) : ""} 
+                        return `${ target ?
+                            article(t.text, request, 'target_lang', target[0].gender) : ""}
                             <span style="color:maroon">
-                                ${t.text}
+                                ${t}
                             </span>`
                     }).join("; ")
                 }
@@ -100,7 +88,7 @@ function card(request: WordRequestOptions, style: string){
             return `
                 <div class="card">
                     <span id="gender">${article(input.text, request, 'input_lang', input.gender)}</span>
-                    ${input.text}
+                    ${input}
                 </div>
                 <style>${style}</style>`
         },
@@ -110,7 +98,7 @@ function card(request: WordRequestOptions, style: string){
                 <span style="color:maroon">
                     ${ input.gender ? `<span id="gender"> ${
                         article(input.text, request, 'input_lang', input.gender)
-                    }</span>`: ``}${input.text}
+                    }</span>`: ``}${input}
                 </span>
             </div>
             <style> ${style} </style>`
@@ -118,10 +106,13 @@ function card(request: WordRequestOptions, style: string){
         speakFront: (translation: Translation, image_src?: string) => {
             const { target } = translation
             // called image.jpg because there is only one image
-            return `<div class="card">
-                ${target[0].text}
-                ${ request.opts.includes('images') && image_src !== undefined? `<br> <img src="${image_src}"> <br>`: ``}
-            </div><style>${style}</style>`
+            return ```<div class="card">
+                ${
+                    target.reduce(( prev, current ) => {
+                        `${prev.text}${current.text};`
+                    }, {text:"", language: "EN"})}
+            ${ request.opts.includes('images') && image_src !== undefined? `<br> <img src="${image_src}"> <br>`: ``}
+            </div><style>${style}</style>```
         }
     }
 
@@ -151,7 +142,7 @@ function Deck(request: WordRequestOptions){ // A deck builder for building out a
             return apkg.save()
                 // Zip is some internal library type that I don't care to find atm
                 .then( (zip: any) => {
-                    fs.writeFileSync(path, zip, 'binary') 
+                    fs.writeFileSync(path, zip, 'binary')
                     return deck
                 })
                 .catch((err: any) => console.log(err))

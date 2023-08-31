@@ -7,7 +7,7 @@ import type { LanguageCode } from "../lib/ankitool/langs"
 
 // TODO: Remove type defs once the AnkiLang library is imported
 
-export interface DeckType {
+export interface DeckType extends Document{
     _id?: Types.ObjectId,
     translations: PopulatedDoc<Document<Types.ObjectId> & DBTranslation>[],
     title: string,
@@ -25,4 +25,4 @@ const deckSchema = new Schema<DeckType>({
 })
 
 
-export const DeckModel = models.Deck || model('Deck', deckSchema);
+export const DeckModel = models.Deck || model<DeckType>('Deck', deckSchema);

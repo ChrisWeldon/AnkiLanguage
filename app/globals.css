@@ -2,3 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+.lined {
+    background: repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      #93a1a1 27px,
+      #93a1a1 28px,
+      transparent 28px,
+      transparent 32px
+    );
+    /* The rectangle in which to repeat. 
+       It can be fully wide in this case */
+}
+
+@variants group-hover, hover, focus {
+    .notebook-input{
+         background: rgb(181,137,0);
+background: linear-gradient(135deg, rgba(181,137,0,0.4) 9%, rgba(181,137,0,0.4) 34%, rgba(238,232,213,0.499019676229867) 64%);
+        background-size: 300% 100%;
+        background-repeat: no-repeat;
+    }
+
+    .notebook-unfocused {
+        background-position: 100% 0%;
+    }
+    
+    .notebook-hover {
+        background-position: 50% 0%;
+    }
+
+    .notebook-focused {
+        background-position: 0% 0%;
+    }
+}
+

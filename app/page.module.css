@@ -1,8 +1,0 @@
-
-export default function LoginPage() {
-  return (
-    <h5 className="text-3xl font-bold underline">
-        Hello Login Page!
-    </h5>
-  )
-}
