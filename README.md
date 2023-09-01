@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Anki Language Webapp
+*A webapplication version AnkiTool CLI.*
 
-## Getting Started
+Anki Spaced Repetition Software is great for studying all sorts of things, but suffers due to generality. Anki Language Webapp takes out the hassle of making anki work for language learners (currently supporting English, German, and French.) Easily create, manage, and export language vocab cards in an immersion setting. While consuming content or traveling in your target language, create vocab cards on the fly without the long pipeline. 
 
-First, run the development server:
+**Old Vocab Card Making Pipeline**
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+1. Save new sentence/word in notes for later
+2. Copy/Paste sentence into translator
+3. Copy Paste translation into Anki
+4. Search for image and past it in.
+5. Study
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**New Vocab Card Making Pipeline**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Save new sentence into Anki Language, and view translation immediatly
+2. Export and Study
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Create a new deck
+![New Deck](https://raw.githubusercontent.com/ChrisWeldon/AnkiTool/master/public/ankiweb_newdeck.png)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Add Cards on the fly
+![Adding Card](https://raw.githubusercontent.com/ChrisWeldon/AnkiTool/master/public/ankiweb_addcard.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Download to anki
+![Downloading](https://raw.githubusercontent.com/ChrisWeldon/AnkiTool/master/public/ankiweb_download.png)
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
