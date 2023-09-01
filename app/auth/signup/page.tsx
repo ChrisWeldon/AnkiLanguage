@@ -1,6 +1,6 @@
 import SignupBox from './components/SignupBox'
 
-export default function LoginPage() {
+export default function SignUp() {
     
     return (
         <SignupBox/>
