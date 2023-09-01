@@ -17,13 +17,13 @@ Anki Spaced Repetition Software is great for studying all sorts of things, but s
 2. Export and Study
 
 #### Create a new deck
-![New Deck](https://raw.githubusercontent.com/ChrisWeldon/GarminVenuAvatar/readme-update/docimages/Watchface_Intro.png)
+![New Deck](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/readme-update/docimages/Watchface_Intro.png)
 
 #### Add Cards on the fly
-![Adding Card](https://raw.githubusercontent.com/ChrisWeldon/AnkiTool/readme-update/public/ankiweb_addcard.png)
+![Adding Card](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/readme-update/public/ankiweb_addcard.png)
 
 #### Download to anki
-![Downloading](https://raw.githubusercontent.com/ChrisWeldon/AnkiTool/readme-update/public/ankiweb_download.png)
+![Downloading](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/readme-update/public/ankiweb_download.png)
 
 
 
