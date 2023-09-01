@@ -16,14 +16,18 @@ Anki Spaced Repetition Software is great for studying all sorts of things, but s
 1. Save new sentence into Anki Language, and view translation immediatly
 2. Export and Study
 
+#### Signup
+![Signup](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/readme-update/public/ankiweb_signup.png)
+
+#### Login
+![Login](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/readme-update/public/ankiweb_login.png)
+
 #### Create a new deck
 ![New Deck](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/readme-update/public/ankiweb_newdeck.png)
 
 #### Add Cards on the fly
 ![Adding Card](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/readme-update/public/ankiweb_addcard.png)
 
-#### Download to anki
-![Downloading](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/readme-update/public/ankiweb_download.png)
 
 
 
