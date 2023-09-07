@@ -1,5 +1,4 @@
 import { Suspense } from 'react'
-import { redirect } from 'next/navigation'
 
 import PhraseList from './components/PhraseList'
 import DeckTitle from './components/DeckTitle'

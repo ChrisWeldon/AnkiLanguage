@@ -1,4 +1,4 @@
-import './globals.css'
+import '../global.css'
 
 import LandingHeader from './components/LandingHeader'
 import { AuthProvider } from './components/AuthProvider'

@@ -1,39 +1,31 @@
-'use client'
+// TODO: Having this page inside the pages directory is because it hasn't quite caught up to NEXTjs app dir yet. Make a feature request
 
-import { SyntheticEvent, useState } from "react"
-import { signIn, useSession } from 'next-auth/react'
-import { redirect } from 'next/navigation'
+import '../../global.css'
 
-export default function LoginBox() {
-    
-    const { status } = useSession({
-        required: false
-    })
+import type { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import { getCsrfToken } from "next-auth/react"
 
-    if(status === 'authenticated'){
-        redirect('/')
-    }
-    
-    const [ email, setEmail ] = useState('')
-    const [ password, setPassword ] = useState('')
 
-    const handleSubmit = (e: SyntheticEvent<{}>) => {
-        e.preventDefault()
-        signIn("credentials", { email, password })
-        setEmail('')
-        setPassword('')
-    }
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  }
+}
+
+export default function Signup({ csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     
     return (
-        <form className="flex flex-col h-84 xl:max-w-md lined text-2xl font-thin italic px-2" onSubmit={handleSubmit}>
+        <form method="post" action="/api/auth/callback/credentials"
+            className="flex flex-col h-84 xl:max-w-md lined text-2xl font-thin italic px-2">
+            <h1> Signup </h1>
+
+            <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+
             <label>
                 Email:
-                <input 
-                name="email"
-                type='text'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="
+                <input name="email" type='text' className="
                     pl-2
                     w-full
                     rounded-xl
@@ -52,12 +44,7 @@ export default function LoginBox() {
             </label>
             <label>
                 Password:
-                <input
-                name="password"
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="
+                <input name="password" type='password' className="
                     pl-2
                     w-full
                     rounded-xl

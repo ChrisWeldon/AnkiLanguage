@@ -2,8 +2,8 @@
 
 import { SyntheticEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { LanguageName, LanguageCode } from '../../../lib/ankitool/langs'
-import { languages } from '../../../lib/ankitool';
+import { LanguageName, LanguageCode } from '@/lib/ankitool/langs'
+import { languages } from '@/lib/ankitool';
 
 type DeckForm = {
     decktitle: string,
