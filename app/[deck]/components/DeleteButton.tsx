@@ -23,7 +23,6 @@ export default function DeleteButton(props:{
         })
 
         const data = res.json()
-        console.log(res)
         router.refresh()
     }
 

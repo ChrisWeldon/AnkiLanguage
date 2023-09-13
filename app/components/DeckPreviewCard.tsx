@@ -7,7 +7,6 @@ export default function DeckPreviewCard(
         value: string
     }
 ){
-    console.log(props);
     return (
         <li key={props.value} className="flex flex-row items-center hover:bg-base2 rounded px-1 my-1">
             <Link className='underline' href={`/${props.value}`}> {props.title}</Link>

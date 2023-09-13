@@ -4,6 +4,7 @@ import { SyntheticEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { LanguageName, LanguageCode } from '@/lib/ankitool/langs'
 import { languages } from '@/lib/ankitool';
+import { revalidateTag } from 'next/cache';
 
 type DeckForm = {
     decktitle: string,
@@ -63,7 +64,7 @@ export default function NewDeck({ params }: {
             outlang: form.outlang,
             include_images: form.images
         }
-        const res = await fetch(`http://localhost:3000/api/u/${params.user}/d/`, {
+        const res = await fetch(`http://localhost:3000/api/deck`, {
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/json'
@@ -73,12 +74,14 @@ export default function NewDeck({ params }: {
         })
 
         if(!res.ok){
-            throw new Error("Deck Creation failed")
+            console.log(res)
             setForm({...form, decktitle: ""})
+            throw new Error("Deck Creation failed")
         }
+        
         const deck = await res.json()
         router.refresh()
-        router.push(`/${params.user}/${deck.value}`)
+        router.push(`/${deck.value}`)
 
     }
 

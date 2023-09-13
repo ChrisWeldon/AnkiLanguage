@@ -19,6 +19,8 @@ export async function POST(req : NextRequest){
         _id: new Types.ObjectId,
         email: formData.get('email'),
         username: formData.get('username'),
+        password: formData.get('password'),
+        decks: []
     })
 
     try{

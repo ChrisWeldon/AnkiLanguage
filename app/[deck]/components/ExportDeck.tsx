@@ -11,7 +11,6 @@ export default function ExportDeck(
     }
 ){
     const { data: session } = useSession()
-    console.log(session)
     // TODO make export compiled on frontend 
     const fileLink = `http://localhost:3000/api/u/${props.user}/d/${props.deck}/file`;
 

@@ -1,21 +1,43 @@
-import { DeckType } from "@/models/Deck";
-import DeckPreviewCard from "./DeckPreviewCard";
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+
 import Link from 'next/link'
+import { DeckType } from "@/models/Deck";
+import { UserModel } from '@/models/User';
+import DeckPreviewCard from "./DeckPreviewCard";
 
-async function getDecks(){
-    const decks = await fetch(`http://127.0.0.1:3000/api/deck/`);
-
-    if(!decks.ok){
-        throw new Error("Decks Fetch Failed")
-    }
-    return await decks.json()
-}
 
 export default async function DeckList(props:{ }){
-    let decks = await getDecks();
+    
+    // make generic the data access functions
+
+    const session = await getServerSession(authOptions)
+
+    if(session === null){
+        // No decks as guest user
+        return (
+            <ul className=" border-r-2 flex flex-col p-2 m-2 font-thin text-2xl">
+               <Link href={`/new-deck`}>New Deck</Link>
+            </ul>
+        )
+    }
+
+    
+    let decks = []
+    if(session.user!=null && session.user.email != null){
+        const user = UserModel.findOne( {email: session.user.email} )
+        if(user!==null){
+            const doc = await user.populate('decks')
+
+            decks = doc.decks
+        }
+    } 
+
+
     let cards = decks.map((deck: DeckType) => {
-        return <DeckPreviewCard key={deck.value} { ...deck }/>
+        return <DeckPreviewCard key={deck.value} title={deck.title} value={deck.value} />
     });
+
 
     return (
         <ul className=" border-r-2 flex flex-col p-2 m-2 font-thin text-2xl">

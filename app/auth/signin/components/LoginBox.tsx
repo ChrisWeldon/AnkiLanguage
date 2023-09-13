@@ -3,6 +3,7 @@
 import { SyntheticEvent, useState } from "react"
 import { signIn, useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
+import Link from "next/link"
 
 export default function LoginBox() {
     
@@ -25,6 +26,7 @@ export default function LoginBox() {
     }
     
     return (
+        <>
         <form className="flex flex-col h-84 xl:max-w-md lined text-2xl font-thin italic px-2" onSubmit={handleSubmit}>
             <label>
                 Email:
@@ -91,5 +93,7 @@ export default function LoginBox() {
 
             "/>
         </form>
+        <Link href="/auth/signup"> signup</Link>
+        </>
     )
 } 

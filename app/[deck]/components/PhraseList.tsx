@@ -37,16 +37,15 @@ export default async function PhraseList(
                     <DeleteButton 
                         deleteURL={`http://localhost:3000/api/deck/?deck=${props.deck}`}
                         payload={{
-                            _id:translation._id
+                            _id:translation._i
                         }}/>
                 </Phrase>
     })
 
-    console.log(cards)
 
     return (
         <ul className="justify-self-center flex flex-col-reverse self-stretch font-thin text-xl">
-            {cards}
+            {cars}
         </ul>
     )
 }

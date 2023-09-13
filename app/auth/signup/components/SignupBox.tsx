@@ -1,15 +1,18 @@
 'use client'
 
 import { SyntheticEvent } from "react"
+import Link from "next/link"
 
 export default function SignupBox() {
 
     const handleSubmit = (e: SyntheticEvent<{}>) => {
-        // TODO request login token
+        fetch()
+        
         e.preventDefault()
     }
     
     return (
+        <>
         <form className="flex flex-col h-84 xl:max-w-md lined text-2xl font-thin italic px-2" onSubmit={handleSubmit}>
             <label>
                 Email:
@@ -85,5 +88,7 @@ export default function SignupBox() {
 
             "/>
         </form>
+        <Link href="/auth/signin">Sign in</Link>
+        </>
     )
 } 

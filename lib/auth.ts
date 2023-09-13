@@ -50,4 +50,4 @@ export const authOptions = {
         newUser: '/auth/credentials-signup'
     }
 
-}
+} 
