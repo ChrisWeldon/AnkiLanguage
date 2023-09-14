@@ -44,6 +44,7 @@ export async function GET(req: NextRequest) : Promise<NextResponse<DeckType[] | 
 
 export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | DeckType | MessageResponse>> {
     // TODO use some sort of verification for body 
+    DeckModel
     TranslationModel // Mongoose model needs reference to be compiled
     await dbConnect()
     // figure out a better way to worry about this

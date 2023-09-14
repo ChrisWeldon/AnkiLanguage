@@ -2,15 +2,17 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
 import Link from 'next/link'
-import { DeckType } from "@/models/Deck";
+import { DeckModel, DeckType } from "@/models/Deck";
 import { UserModel } from '@/models/User';
 import DeckPreviewCard from "./DeckPreviewCard";
 
 
 export default async function DeckList(props:{ }){
+    DeckModel
     
     // make generic the data access functions
 
+    // TODO: try using getSession(req) hook
     const session = await getServerSession(authOptions)
 
     if(session === null){

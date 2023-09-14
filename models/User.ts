@@ -15,8 +15,8 @@ export interface UserType {
 
 const userSchema = new Schema<UserType>({
     _id: Schema.Types.ObjectId,
-    username: String,
-    email: String,
+    username: {type: String, unique: true, dropDups: true, required: true},
+    email: {type: String, unique: true, dropDups: true, required: true},
     password: String,
     decks: [{ type: 'ObjectId' , ref: 'Deck'}],
 })
