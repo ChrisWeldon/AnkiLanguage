@@ -1,5 +1,3 @@
-'use server'
-
 import { Types } from 'mongoose';
 import { isLanguageCode, LanguageCode, getLanguage } from '../../../../lib/ankitool/langs'
 import PhraseInputMeat from './PhraseInputMeat'

@@ -3,6 +3,7 @@ import Phrase from './Phrase'
 import AddCard from './AddCard'
 import DeleteButton from './DeleteButton';
 import { DeckType } from '../../../../models/Deck';
+import { warn } from 'console';
 
 async function getDeck(deckid: string): Promise<DeckType>{
     const deck = await fetch(`http://127.0.0.1:3000/api/u/chris/d/${deckid}/`);
