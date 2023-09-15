@@ -33,7 +33,7 @@ const credProvider = CredentialsProvider({
             //   Thus we need to return an empty session and now check if session not valid.
             //   The correct way is to return 'null' but that causes unwanted side effects from NextAuth
             console.log(`Attempted sign in for ${credentials.email}. Invalid sign in.`)
-            return null
+            return false
         }
     }
 })
