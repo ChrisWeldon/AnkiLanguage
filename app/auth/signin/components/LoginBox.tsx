@@ -4,6 +4,7 @@ import { SyntheticEvent, useState } from "react"
 import { signIn, useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 import Link from "next/link"
+import validateEmail from "@/lib/helpers/validateEmail"
 
 export default function LoginBox() {
     
@@ -17,10 +18,26 @@ export default function LoginBox() {
     
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
+    const [ message, setMessage ] = useState('')
 
-    const handleSubmit = (e: SyntheticEvent<{}>) => {
+    const handleSubmit = async (e: SyntheticEvent<{}>) => {
         e.preventDefault()
-        signIn("credentials", { email, password })
+
+        if(!validateEmail(email)){
+            setMessage('Please enter a valid email')
+            setEmail('')
+            setPassword('')
+            return
+        }
+
+        const res = await signIn("credentials", { redirect:false, email, password })
+
+        if(res===undefined || res.error !== null){
+            setMessage('Invalid credentials')
+        }else if(!res.ok){
+            setMessage('Please Try again later')
+        }
+
         setEmail('')
         setPassword('')
     }
@@ -34,6 +51,7 @@ export default function LoginBox() {
                 name="email"
                 type='text'
                 value={email}
+                required
                 onChange={(e) => setEmail(e.target.value)}
                 className="
                     pl-2
@@ -58,6 +76,7 @@ export default function LoginBox() {
                 name="password"
                 type='password'
                 value={password}
+                required
                 onChange={(e) => setPassword(e.target.value)}
                 className="
                     pl-2
@@ -77,7 +96,7 @@ export default function LoginBox() {
                 "/>
             </label>
             <p className="h-16"></p>
-            <input type='submit' value="Login" className="
+            <input type='submit' value="Go" className="
                     self-center
                     rounded-xl
                     w-36
@@ -94,6 +113,7 @@ export default function LoginBox() {
             "/>
         </form>
         <Link href="/auth/signup"> signup</Link>
+        {message}
         </>
     )
 } 

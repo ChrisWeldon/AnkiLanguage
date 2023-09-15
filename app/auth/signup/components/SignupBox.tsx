@@ -4,6 +4,8 @@ import { SyntheticEvent, useState, useEffect } from "react"
 import Link from "next/link"
 import { signIn, useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
+import validateEmail from "@/lib/helpers/validateEmail"
+import validatePassword from "@/lib/helpers/validatePassword"
 
 export default function SignupBox() {
 
@@ -28,8 +30,34 @@ export default function SignupBox() {
 
     const handleSubmit = async (e: SyntheticEvent<{}>) => {
         e.preventDefault()
+
+        // First validate locally
         
-        // fetch here
+        if(!validateEmail(email)){
+            setMessage('Please enter a valid email')
+            setEmail('')
+            setEmail_v('')
+            setPassword('')
+            return
+        }
+
+        if(email !== email_v){
+            setMessage('Emails must match')
+            setEmail('')
+            setEmail_v('')
+            setPassword('')
+            return
+        }
+
+        if(!validatePassword(password)){
+            //Password must be between 6 to 20 characters, \n contain at least one numeric digit, \n one uppercase and one lowercase letter
+            setMessage(`Invalid password `)
+            setPassword('')
+            return
+        }
+
+        
+        // Then ask server
         const resp = await fetch('/api/auth/signup', {
             method: 'POST',
             headers: {
@@ -57,7 +85,12 @@ export default function SignupBox() {
         <form className="flex flex-col h-84 xl:max-w-md lined text-2xl font-thin italic px-2" onSubmit={handleSubmit}>
             <label>
                 Email:
-                <input name="username" type='email' value={email} onChange={(e)=>setEmail(e.target.value)}
+                <input
+                name="username"
+                type='text'
+                value={email}
+                required
+                onChange={(e)=>setEmail(e.target.value)}
                 className="
                     pl-2
                     w-full
@@ -77,7 +110,12 @@ export default function SignupBox() {
             </label>
             <label>
                 Repeat Email:
-                <input name="email_v" type='email' value={email_v} onChange={(e)=>setEmail_v(e.target.value)}
+                <input
+                name="email_v"
+                type='text' 
+                value={email_v} 
+                required
+                onChange={(e)=>setEmail_v(e.target.value)}
                 className="
                     pl-2
                     w-full
@@ -97,7 +135,12 @@ export default function SignupBox() {
             </label>
             <label>
                 Password:
-                <input name="username" type='password' value={password} onChange={(e)=>setPassword(e.target.value)} 
+                <input
+                name="username" 
+                type='password' 
+                value={password} 
+                required
+                onChange={(e)=>setPassword(e.target.value)} 
                 className="
                     pl-2
                     w-full
@@ -116,7 +159,7 @@ export default function SignupBox() {
                 "/>
             </label>
             <p className="h-16"></p>
-            <input type='submit' value="Sign up" className="
+            <input type='submit' value="Submit" className="
                     self-center
                     rounded-xl
                     w-36
@@ -132,10 +175,10 @@ export default function SignupBox() {
 
             "/>
         </form>
-        <Link href="/auth/signin">Sign in</Link>
+        <Link href="/auth/signin">sign in</Link>
         <br/>
         <br/>
-        <h3>{message}</h3>
+        <p>{message}</p>
         </>
     )
 } 

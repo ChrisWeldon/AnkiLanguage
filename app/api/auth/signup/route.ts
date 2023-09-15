@@ -5,6 +5,7 @@ import { NextResponse, NextRequest } from "next/server"
 import validateEmail from '@/lib/helpers/validateEmail'
 
 import dbConnect from "@/lib/dbConnect"
+import validatePassword from '@/lib/helpers/validatePassword'
 
 // Make one type in file
 type MessageResponse = {
@@ -15,7 +16,7 @@ type MessageResponse = {
 export async function POST(req : NextRequest): Promise< NextResponse< UserType | MessageResponse > > {
     UserModel
 
-    // propbably want to authenticate first
+    // probably want to authenticate first
     await dbConnect();
 
     if(!req.body){
@@ -24,27 +25,31 @@ export async function POST(req : NextRequest): Promise< NextResponse< UserType |
 
     const body = await req.json()
 
-    // Check email not already used
-    // Check email is valid address
-    // Send errors when it fails
-    // Send verification email
-    console.log(body)
+    //TODO: Send verification email
 
     const veri : Array<UserType> = await UserModel.find({
         email: body.email
     }).exec()
 
-    if(!validateEmail(email.body)){
+    // Check email is valid address
+    if(!validateEmail(body.email)){
         console.log(`Attempt to create ${body.email} failed. Invalid email address.`)
-        return NextResponse.json({error: 'User with that email already exists'}, {status: 409, statusText: 'User with that email already exists'})
-
+        return NextResponse.json({error: 'User with that email already exists'}, {status: 422, statusText: 'Invalid Email'})
     }
 
+    // Check email not already used
     if(veri.length>0){
         console.log(`Attempt to create ${body.email} failed. User already exists.`)
         return NextResponse.json({error: 'User with that email already exists'}, {status: 409, statusText: 'User with that email already exists'})
     }
 
+    // Check password is valid
+    if(!validatePassword(body.password)){
+        console.log(`Attempt to create ${body.email} failed. Password invalid.`)
+        return NextResponse.json({error: 'Password is invalid'}, {status: 422, statusText: 'Invalid Password'})
+    }
+    
+    console.log(`Attempt to create ${body.email} Success.`)
 
     const user = new UserModel({
         _id: new Types.ObjectId,
@@ -56,7 +61,6 @@ export async function POST(req : NextRequest): Promise< NextResponse< UserType |
 
     try{
         const saved = await user.save();
-        console.log(saved)
         return NextResponse.json(saved);
     }catch(err){
         console.log(err)

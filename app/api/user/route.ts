@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) : Promise<NextResponse<UserType | Me
 
     
     if(session.user!=null && session.user.email != null){
-        const user = UserModel.findOne( {email: session.user.email} )
+        const user = await UserModel.findOne( {email: session.user.email} ).exec()
         if(user===null){
             return NextResponse.json({ error: 'Invalid Session'}, {status: 404})
 
