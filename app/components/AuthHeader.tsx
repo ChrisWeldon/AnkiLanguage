@@ -25,7 +25,6 @@ export default function AuthHeader(){
         return <p> Loading ... </p>
     }else{
         return <Link href='/auth/signin'>Sign in</Link>
-
     }
 
 }

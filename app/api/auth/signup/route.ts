@@ -1,8 +1,10 @@
-
 import { Types } from 'mongoose'
 import { UserModel, UserType } from "@/models/User"
 import { NextResponse, NextRequest } from "next/server"
 import validateEmail from '@/lib/helpers/validateEmail'
+import { saltRounds } from '@/lib/auth'
+
+import bcrypt from 'bcrypt'
 
 import dbConnect from "@/lib/dbConnect"
 import validatePassword from '@/lib/helpers/validatePassword'
@@ -48,6 +50,8 @@ export async function POST(req : NextRequest): Promise< NextResponse< UserType |
         console.log(`Attempt to create ${body.email} failed. Password invalid.`)
         return NextResponse.json({error: 'Password is invalid'}, {status: 422, statusText: 'Invalid Password'})
     }
+
+    const password_hash = await bcrypt.hash(body.password, saltRounds)
     
     console.log(`Attempt to create ${body.email} Success.`)
 
@@ -55,7 +59,7 @@ export async function POST(req : NextRequest): Promise< NextResponse< UserType |
         _id: new Types.ObjectId,
         email: body.email,
         username: body.email,
-        password: body.password,
+        password: password_hash,
         decks: []
     })
 

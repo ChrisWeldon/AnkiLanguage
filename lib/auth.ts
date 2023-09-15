@@ -1,6 +1,7 @@
 import dbConnect from '@/lib/dbConnect'
 import { UserModel } from '@/models/User'
 import CredentialsProvider from "next-auth/providers/credentials"
+import bcrypt from 'bcrypt'
 
 type User = {
     id: number,
@@ -25,8 +26,9 @@ const credProvider = CredentialsProvider({
         const potentialUser = await UserModel.findOne({ email : credentials.email}).exec()
 
         // TODO encrypt
+        const pass_match = bcrypt.compare(credentials.password, potentialUser.password)
        
-        if(potentialUser && credentials.password === potentialUser.password){
+        if(potentialUser && pass_match){
             return potentialUser;
         }else{
             // Idiot NextAuth has builtin redirects but are not up to date on Next13
@@ -51,3 +53,5 @@ export const authOptions = {
     }
 
 } 
+
+export const saltRounds = 10
