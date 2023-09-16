@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Anki Language Webapp
+*A webapplication version AnkiTool CLI.*
 
-## Getting Started
+Anki Spaced Repetition Software is great for studying all sorts of things, but suffers due to generality. Anki Language Webapp takes out the hassle of making anki work for language learners (currently supporting English, German, and French.) Easily create, manage, and export language vocab cards in an immersion setting. While consuming content or traveling in your target language, create vocab cards on the fly without the long pipeline. 
 
-First, run the development server:
+**Old Vocab Card Making Pipeline**
 
-```bash
-npm run dev
-# or
-yarn dev
+1. Save new sentence/word in notes for later
+2. Copy/Paste sentence into translator
+3. Copy Paste translation into Anki
+4. Search for image and past it in.
+5. Study
+
+**New Vocab Card Making Pipeline**
+
+1. Save new sentence into Anki Language, and view translation immediatly
+2. Export and Study
+
+#### Create a new deck
+![New Deck](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/main/public/ankiweb_newdeck.png)
+
+#### Add Cards on the fly
+![Adding Card](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/main/public/ankiweb_addcard.png)
+
+
+
+
+## Development
+
+This project is built using NextJS 13 App directory framework.
+
+- Frontend: NextJS
+- Backend: NextJS API Routing
+- Database: MongoDB
+- Language: Typescript
+
+The authentication solution is written using NextAuth, although this is subject to change given latest NextJS support.
+
+This service taps into a number of services to pull translations for target words, some of which will require the use of api developer keys obtained from different suppliers. A DeepL API key and Google Image API keys are recommended but not essential for the opperation of the service. Deepl simply supplies more accurate translation options for phrases and longer vocabulary blocks.
+
+### To run locally
+
+`npm run install`
+
+**Setup .env.local file**
+
+In root directory of project
+
+```
+touch .env.local
+
+echo MONGO_USERNAME=<your mongodb api username>
+echo MONGO_PASSWORD=<your mongodb passkey>
+echo MONGODB_URI=<your db connection>
+
+echo GOOGLE_IMAGE_SEARCH=<Google Image API Key>
+echo CID=<Google CID Key>
+echo DEEPL_API_KEY=<Deepl API Key>
+
+echo ANKI_OUTPUT_DIR=./public/
+echo NEXT_PUBLIC_API_ADDRESS_PUBLIC=http://localhost:3000
+echo API_PRIVATE_ADDRESS=http://localhost:3000
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**to run dev server**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```npm run dev```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Depending on whichever deployment service you use, the process will be similar to running locally.
 
-## Learn More
+1. Clone and install packages in deployment same as locally.
+2. Create `.env.local` file same as local only with deployment keys
 
-To learn more about Next.js, take a look at the following resources:
+*To start server*
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+npm run build
+npm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
