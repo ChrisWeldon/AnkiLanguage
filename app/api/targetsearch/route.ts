@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Cors from 'cors'
-import { getTargetsDeepL, getTargetsDictCCTable } from '@/lib/ankitool'
+//import { getTargetsDeepL, getTargetsDictCCTable } from '@/lib/ankitool'
 import { getLanguage } from '@/lib/ankitool/langs'
 import { NextRequest, NextResponse } from 'next/server'
+import { getTargetsDeepL } from '@/lib/ankitool/deepl/retrieve'
+import { getTargetsDictCCTable } from '@/lib/ankitool/dictcc'
 
 // FIXME: make rigourous
 const cors = Cors({
@@ -11,21 +13,6 @@ const cors = Cors({
 })
 
 
-function runMiddleware(
-    req: NextApiRequest,
-    res: NextApiResponse,
-    ware: Function
-){
-    return new Promise((resolve, reject) =>{
-        ware(req, res, (result: any) => {
-            if(result instanceof Error){
-                return reject(result)
-            }
-            return resolve(result)
-        })
-    })
-}
-
 type MessageReponse = {
     message: string,
     err?: string | undefined
@@ -33,10 +20,7 @@ type MessageReponse = {
 
 // Request a translation for potential use later
 export async function POST(req: NextRequest) : Promise<NextResponse<TranslationResponse | MessageReponse>>{
-
-
-    const request = await req.json()
-    const body = await request.body
+    const body = await req.json()
 
     const inlang = getLanguage(body.inlang)
     const outlang = getLanguage(body.outlang)
@@ -53,8 +37,9 @@ export async function POST(req: NextRequest) : Promise<NextResponse<TranslationR
         article: "base"
     }
 
+
     if(!body || !body.input || body.input===""){
-        return NextResponse.json([], {status: 200})
+        return NextResponse.json([], {status: 200, statusText:'body empty'})
     }
 
     const dictcc: Promise<TranslationResponse> =  getTargetsDictCCTable(body.input, reqopts)

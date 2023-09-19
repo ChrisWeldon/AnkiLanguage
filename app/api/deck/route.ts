@@ -19,14 +19,13 @@ export async function GET(req: NextRequest) : Promise<NextResponse<DeckType[] | 
     await dbConnect()
 
     const session = await getServerSession(authOptions)
-    
+
     
     // Client wants details on one deck
     if(req.nextUrl.searchParams.has('deck') && req.nextUrl.searchParams.get('deck') != null){
-        const deck = DeckModel.findOne( {value: req.nextUrl.searchParams.get('deck')} )
+        const deck = DeckModel.findOne( {_id: req.nextUrl.searchParams.get('deck')} )
         if(deck===null){
             return NextResponse.json({ error: 'No deck with that id'}, {status: 404})
-
         }
         const doc = await deck.populate('translations')
         return NextResponse.json(doc, {status: 200});
@@ -79,6 +78,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
         return NextResponse.json({ error: "This User no longer exists"}, {status: 500})
     }
 
+
     const deck = new DeckModel({
         _id: new Types.ObjectId,
         title: body.title.trim(),
@@ -86,6 +86,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
         inlang: body.inlang,
         outlang: body.outlang,
         translations: [],
+        owner: user._id
     }) 
 
     try{

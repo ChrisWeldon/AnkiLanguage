@@ -13,7 +13,8 @@ export interface DeckType extends Document{
     title: string,
     value: string,
     inlang: LanguageCode,
-    outlang: LanguageCode
+    outlang: LanguageCode,
+    owner: Types.ObjectId,
 }
 
 const deckSchema = new Schema<DeckType>({
@@ -22,6 +23,7 @@ const deckSchema = new Schema<DeckType>({
     translations: [{ type: 'ObjectId' , ref: 'Translation'}],
     inlang: String,
     outlang: String,
+    owner: {type: 'ObjectId', ref: 'User'}
 })
 
 

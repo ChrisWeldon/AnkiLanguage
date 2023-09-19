@@ -1,44 +1,41 @@
-'use server'
 import Phrase from './Phrase'
 import AddCard from './AddCard'
 import DeleteButton from './DeleteButton';
-import { DeckType } from '@/models/Deck';
-
-async function getDeck(deckid: string): Promise<DeckType>{
-    const deck = await fetch(`http://127.0.0.1:3000/api/deck/?deck=${deckid}`);
-    if(!deck.ok){
-        throw new Error("Decks Fetch Failed")
-    }
-    return deck.json();
-}
+import { authOptions } from '@/lib/auth';
+import { getServerSession } from 'next-auth';
+import getDeckByValueSession from '@/lib/database/getDeckByValueSession';
+import { redirect } from 'next/navigation';
 
 
 export default async function PhraseList(
     props:{
         deck: string,
-        user: string
     }
 ){
-    
-    const deck = await getDeck(props.deck);
+
+    const session = await getServerSession(authOptions)
+
+    if(session === null){
+        redirect('/')
+    }
+
+    const deck = await getDeckByValueSession(props.deck, session)
     
     if(deck===null || deck.translations === undefined){
-        return <div> Deck does not exists </div>
-
+        return <div> Deck does not exist </div>
     }
 
     // TODO fix any should be TranslationType
     //
     let cards = deck.translations.map((translation: any, i: number) =>{
-        return <Phrase key={translation._id}
-                user={props.user}
-                deck={props.deck}
-                { ...translation }>
+        return <Phrase 
+                key={translation._id}
+                input = { translation.input }
+                target = { translation.target }
+                >
                     <DeleteButton 
-                        deleteURL={`http://localhost:3000/api/deck/?deck=${props.deck}`}
-                        payload={{
-                            _id:translation._i
-                        }}/>
+                        deleteURL={`http://localhost:3000/api/translations/?id=${translation._id}`}
+                        />
                 </Phrase>
     })
 

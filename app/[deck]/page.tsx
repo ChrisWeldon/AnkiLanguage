@@ -6,17 +6,9 @@ import DeckTitle from './components/DeckTitle'
 import AddCard from './components/AddCard'
 import ExportDeck from './components/ExportDeck'
 
-import { DeckType } from '@/models/Deck';
-
-async function getDeck(deckid: string): Promise<DeckType>{
-    const deck = await fetch(`http://127.0.0.1:3000/api/deck/?deck=${deckid}`,{
-        cache: 'no-store'
-    });
-    if(!deck.ok){
-        throw new Error("Decks Fetch Failed")
-    }
-    return deck.json();
-}
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import getDeckByValueSession from '@/lib/database/getDeckByValueSession'
 
 
 export default async function DeckPage({
@@ -28,27 +20,34 @@ export default async function DeckPage({
     }
 }) {
 
+    const session = await getServerSession(authOptions) 
 
-    const deck = await getDeck(params.deck);
+    if(session===null){
+        return <p> no session </p>
+    }
+    
+    const deck = await getDeckByValueSession(params.deck, session);
+
     if(deck===null){
         redirect('/')
     }
 
-    const { title } = deck;
+    const { title, _id } = deck;
+
     // should make a request based on id from decktitel
     return (
     <div className="flex flex-col content-center" >
         <DeckTitle title={title} />
 
         <AddCard
-            deck={params.deck} 
+            deck_id={_id} 
             user={params.user}
             inlang={deck.inlang}
             outlang={deck.outlang}
         />
         <Suspense fallback={<p>Loading...</p>}>
             {/* @ts-expect-error Server Component */}
-            <PhraseList deck={params.deck} user={params.user}/>
+            <PhraseList deck={params.deck} />
         </Suspense>
         <ExportDeck deck={params.deck} user={params.user} article="is"/>
     </div>

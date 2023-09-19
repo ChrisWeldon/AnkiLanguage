@@ -1,7 +1,7 @@
-import dbConnect from '../../../../../../../lib/dbConnect'
+import dbConnect from '@/lib/dbConnect'
 import { Types } from 'mongoose'
-import { TranslationModel, DBTranslation} from '../../../../../../../models/Translation'
-import { DeckModel, DeckType } from '../../../../../../../models/Deck'
+import { TranslationModel, DBTranslation} from '@/models/Translation'
+import { DeckModel, DeckType } from '@/models/Deck'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ObjectId } from 'mongodb'
 import { NextRequest, NextResponse } from 'next/server'
@@ -57,12 +57,11 @@ export async function POST(req: NextRequest): Promise<NextResponse<DBTranslation
     TranslationModel
     DeckModel
 
-    const request = await req.json()
-    const body = await request.body
+    const body = await req.json()
 
     var deck : DeckType | null = null
     if(req.nextUrl.searchParams.has('deck') && req.nextUrl.searchParams.get('deck') != null){
-        deck = await DeckModel.findOne( {value: req.nextUrl.searchParams.get('deck')})
+        deck = await DeckModel.findOne( {_id: req.nextUrl.searchParams.get('deck')})
     } 
 
     if(deck===null){
@@ -100,14 +99,12 @@ export async function POST(req: NextRequest): Promise<NextResponse<DBTranslation
 export async function DELETE(req: NextRequest): Promise<NextResponse<DBTranslation[] | DBTranslation | MessageReponse>>{
     await dbConnect()
 
-    const request = await req.json()
-    const body = await request.body
+    if(req.nextUrl.searchParams.has('id') && req.nextUrl.searchParams.get('id') != null){
+        const deleted = await TranslationModel.deleteOne({_id: req.nextUrl.searchParams.get('id') })
+        return NextResponse.json( { message: 'Deleted' }, { status: 200, statusText: "Deleted" })
+    }else{
+        return NextResponse.json( { message: 'Could not be deleted' }, { status: 409, statusText: "Could not be deleted" })
+    } 
 
-    if(body._id === null){
-        return NextResponse.json({message: 'id required for deletion'}, {status: 400})
-    }
-
-    const deleted = await TranslationModel.deleteOne({_id: body._id})
-    return NextResponse.json( { message: 'Deleted'}, {status: 200})
 }
 

@@ -24,6 +24,7 @@
 import path from 'path'
 import fs from 'fs'
 import AnkiExport from 'anki-apkg-export'
+//const AnkiExport  = require('anki-apkg-export').default;
 
 // apkg.addMedia('anki.png', fs.readFileSync('anki.png'));
 
@@ -106,13 +107,14 @@ function card(request: WordRequestOptions, style: string){
         speakFront: (translation: Translation, image_src?: string) => {
             const { target } = translation
             // called image.jpg because there is only one image
-            return ```<div class="card">
+            return `
+            <div class="card">
                 ${
                     target.reduce(( prev, current ) => {
                         `${prev.text}${current.text};`
                     }, {text:"", language: "EN"})}
-            ${ request.opts.includes('images') && image_src !== undefined? `<br> <img src="${image_src}"> <br>`: ``}
-            </div><style>${style}</style>```
+                ${ request.opts.includes('images') && image_src !== undefined? `<br> <img src="${image_src}"> <br>`: ``}
+            </div><style>${style}</style>`
         }
     }
 

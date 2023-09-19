@@ -9,11 +9,12 @@ import { DBTranslation } from '@/models/Translation';
 import AddCardInput from "./AddCardInput";
 import Result from "./Result";
 import { LanguageCode } from '@/lib/ankitool/langs';
+import { ObjectId } from 'mongodb';
 
 
 export default function AddCard(
     props: {
-        deck: string,
+        deck_id: ObjectId | undefined,
         user: string,
         inlang: LanguageCode,
         outlang: LanguageCode
@@ -46,7 +47,7 @@ export default function AddCard(
         setLatestSearch(latestSearch+1)
         const id = latestSearch
 
-        fetch(`${API_ADDRESS}/api/targetsearch/`, {
+        fetch(`http://localhost:3000/api/targetsearch/`, {
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/json'
@@ -70,7 +71,7 @@ export default function AddCard(
     // this is a closure to for low level handling
     const handleResultSelect = (result: Translation) => {
         return (event: SyntheticEvent<{}>) => {
-            fetch(`${API_ADDRESS}/api/deck/?deck=${props.deck}`, {
+            fetch(`http://localhost:3000/api/translations/?deck=${props.deck_id}`, {
                 cache: 'no-store',
                 headers: {
                     'Content-Type': 'application/json'
@@ -88,14 +89,13 @@ export default function AddCard(
         }
     }
 
-    console.log(results)
 
 
 
     let resultcards = results.map((result: Translation, i) =>
         <Result key={i}
             result={result}
-            deck={props.deck}
+            deck_id={props.deck_id}
             user={props.user}
             handleResultSelect={handleResultSelect}
             />

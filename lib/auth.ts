@@ -44,6 +44,20 @@ export const authOptions = {
     providers: [
         credProvider
     ],
+    callbacks:{
+        async jwt({ token, user, account, profile }){
+            return token
+        },
+        async session({ session, token, user}){
+            // Pinning user id to the session for easier access
+            if(token.sub){
+                session.user._id = token.sub
+            }
+            return session
+        }
+
+
+    },
     session: {
         strategy: 'jwt'
     },

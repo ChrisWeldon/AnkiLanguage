@@ -6,7 +6,6 @@ import type { SyntheticEvent } from 'react';
 
 export default function DeleteButton(props:{
     deleteURL: string,
-    payload: any
 }) {
     
     const router = useRouter()
@@ -19,10 +18,8 @@ export default function DeleteButton(props:{
                 'Content-Type': 'application/json'
             },
             method: "DELETE",
-            body: JSON.stringify(props.payload)
         })
 
-        const data = res.json()
         router.refresh()
     }
 

@@ -1,11 +1,12 @@
 'use client'
 import { SyntheticEvent } from "react"
 import { getLanguage, Language } from '@/lib/ankitool/langs'
+import { ObjectId } from "mongodb"
 
 export default function Results(
     props: {
         result: Translation,
-        deck: string,
+        deck_id: ObjectId,
         user: string
         handleResultSelect: (result: Translation) => ((event: SyntheticEvent<{}>) => void)
     }
