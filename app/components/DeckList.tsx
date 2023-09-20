@@ -32,8 +32,7 @@ export default async function DeckList(props:{ }){
         const user = UserModel.findOne( {email: session.user.email} )
         if(user!==null){
             const doc = await user.populate('decks')
-
-            decks = doc.decks
+            decks = doc && doc.decks ? doc.decks : []
         }
     } 
 
