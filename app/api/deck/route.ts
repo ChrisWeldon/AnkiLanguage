@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import urlConvert from '@/lib/helpers/urlConvert'
+import { Session } from 'next-auth'
 
 type MessageResponse = {
     message?: string,
@@ -50,6 +51,11 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
     //
     const session = await getServerSession(authOptions)
 
+    if(!session){
+        return NextResponse.json({error: 'No user session'}, {status: 403, statusText: "No User Logged In"})
+
+    }
+
     if(!req.body){
         return NextResponse.json({error: 'Body Empty'}, {status: 400})
     }
@@ -64,19 +70,14 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
         return NextResponse.json({ error: `Deck with empty title not allowed.` }, {status: 403})
     }
 
-    const deckCheck = await DeckModel.find({
-        value: urlConvert(body.title.trim())
-    }, 'value').exec()
-
-    if(deckCheck.length>0){
-        return NextResponse.json({ message: `Deck with title ${body.title.trim()} exists.`})
-    }
 
     var user = await UserModel.findOne( {email: session.user.email})
 
     if(user===null){
         return NextResponse.json({ error: "This User no longer exists"}, {status: 500})
     }
+
+    console.log(`CREATE DECK SESSION ID: ${JSON.stringify( session )}`)
 
 
     const deck = new DeckModel({
@@ -86,7 +87,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
         inlang: body.inlang,
         outlang: body.outlang,
         translations: [],
-        owner: user._id
+        owner: session?._id // idk this error, yes it is in next-auth.d.ts
     }) 
 
     try{
