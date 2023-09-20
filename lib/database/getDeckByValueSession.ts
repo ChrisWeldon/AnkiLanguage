@@ -1,9 +1,11 @@
 import { DeckType, DeckModel } from "@/models/Deck"
+import { TranslationModel } from "@/models/Translation"
 import dbConnect from "../dbConnect"
 import { Session } from "next-auth"
 
 async function getDeckByValueSession(value: string, session: Session) : Promise<DeckType>{
     DeckModel
+    TranslationModel
     await dbConnect()
     
 
