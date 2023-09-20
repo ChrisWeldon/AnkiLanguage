@@ -3,8 +3,6 @@
 import { SyntheticEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { LanguageName, LanguageCode } from '@/lib/ankitool/langs'
-import { languages } from '@/lib/ankitool';
-import { revalidateTag } from 'next/cache';
 
 type DeckForm = {
     decktitle: string,
@@ -32,6 +30,8 @@ export default function NewDeck({ params }: {
         images: false
     })
 
+    const [loadingSubmit, setLoadingSubmit] = useState(false)
+
     // TODO: get these from the language library. This may mean passing them serverprops style
     const languages: FormOption[] = [
         {value: "FR", name:"Français"},
@@ -58,6 +58,7 @@ export default function NewDeck({ params }: {
 
     const handleSubmit = async (e: SyntheticEvent<{value: any}>) => { 
         e.preventDefault()
+        setLoadingSubmit(true)
         const payload = {
             title: form.decktitle,
             inlang: form.inlang,
@@ -73,10 +74,11 @@ export default function NewDeck({ params }: {
             body: JSON.stringify(payload)
         })
 
+        setLoadingSubmit(false)
         if(!res.ok){
             console.log(res)
             setForm({...form, decktitle: ""})
-            throw new Error("Deck Creation failed")
+            // TODO: Throw message
         }
         
         const deck = await res.json()
@@ -115,5 +117,6 @@ export default function NewDeck({ params }: {
                 
                 <input type='submit' value="Done" onClick={handleSubmit}/>
             </form>
+            {loadingSubmit ? <h1>Loading...</h1>: <></>}
         </div>)
 } 

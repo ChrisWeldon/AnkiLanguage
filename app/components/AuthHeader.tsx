@@ -16,6 +16,7 @@ export default function AuthHeader(){
 
     const handleSignout = () => {
         signOut({redirect: false})
+        router.refresh()
         router.push('/auth/signin')
     }
 
