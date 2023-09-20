@@ -2,9 +2,9 @@
 
 import { SyntheticEvent, useState } from "react"
 import { signIn, useSession } from 'next-auth/react'
-import { redirect } from 'next/navigation'
 import Link from "next/link"
 import validateEmail from "@/lib/helpers/validateEmail"
+import { useRouter } from "next/navigation"
 
 export default function LoginBox() {
     
@@ -12,8 +12,11 @@ export default function LoginBox() {
         required: false
     })
 
+    const router = useRouter()
+
     if(status === 'authenticated'){
-        redirect('/')
+        router.refresh()
+        router.push('/')
     }
     
     const [ email, setEmail ] = useState('')
