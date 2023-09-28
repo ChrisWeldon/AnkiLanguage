@@ -16,6 +16,7 @@ export default function DeckListLoading(props:{ }){
             flex
             flex-col
             font-thin
+            w-full
 
             ">
             {cards}
