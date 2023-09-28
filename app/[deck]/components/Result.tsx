@@ -33,9 +33,9 @@ export default function Results(
     const clickHandle = props.handleResultSelect(result)
 
     return (
-        <div onClick={clickHandle} className="hover:transition-all  border-b-2 border-base3 hover:border-b-2 hover:border-base00" >
-        <span className="text-xl pr-4">{input_gender} {result.input.text}</span> 
-        <span>{targets}</span> 
+        <div onClick={clickHandle} className="hover:transition-all h-8 truncate leading-none border-b-2 border-base3 hover:border-b-2 hover:border-base00" >
+            <span className="text-xl pr-4">{input_gender} {result.input.text}</span> 
+            <span className="">{targets}</span> 
         </div>
     )
 }

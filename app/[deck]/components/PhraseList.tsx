@@ -41,7 +41,9 @@ export default async function PhraseList(
 
 
     return (
-        <ul className="justify-self-center flex flex-col-reverse self-stretch font-thin text-xl">
+        <ul className="
+            flex flex-col-reverse  
+        ">
             {cards}
         </ul>
     )

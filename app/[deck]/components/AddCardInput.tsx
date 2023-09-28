@@ -12,6 +12,9 @@ export default function AddCardInput(
     return (
         <input 
             className="
+                h-8
+                text-3xl
+                leading-none
                 transition-all 
                 bg-base3  border-b-2
                 border-base00 focus:bg-base2 outline-none " 
@@ -20,6 +23,7 @@ export default function AddCardInput(
             name="input"
             value={props.term}
             onChange={props.handleInputChange}
+            placeholder={'Search for target'}
         />
     )
 }

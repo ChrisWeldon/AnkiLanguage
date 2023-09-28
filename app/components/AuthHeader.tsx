@@ -21,11 +21,26 @@ export default function AuthHeader(){
     }
 
     if(status === 'authenticated' && session.user){
-        return <button onClick={()=>handleSignout()}> Signout of {session.user.email}</button>
+        return (
+            <div className="flex flex-row py-2 items-start space-x-4">
+            <p>Hello, {session.user.email}</p>
+            <button onClick={()=>handleSignout()}><span className="underline">signout</span></button>
+            </div>
+        )
+
     }else if(status === 'loading'){
-        return <p> Loading ... </p>
+        return (
+            <div className="flex flex-row py-2 items-start space-x-4">
+                <div className="animate-pulse h-8 w-48 bg-base2 ">
+                </div>
+            </div>
+        )
     }else{
-        return <Link href='/auth/signin'>Sign in</Link>
+        return (
+            <div className="flex flex-row py-2 items-start space-x-4">
+                <Link href='/auth/signin' className="underline">Sign in</Link>
+            </div>
+        )
     }
 
 }

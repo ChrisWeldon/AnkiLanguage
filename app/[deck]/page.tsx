@@ -36,24 +36,40 @@ export default async function DeckPage({
 
     // should make a request based on id from decktitel
     return (
-    <div className="flex
+    <div className="
+        flex
         flex-col
         content-center
-        h-full
-        mx-10
+        h-full 
+        lined
     ">
         <DeckTitle title={title} />
 
-        <AddCard
-            deck_id={_id} 
-            user={params.user}
-            inlang={deck.inlang}
-            outlang={deck.outlang}
-        />
-        <Suspense fallback={<p>Loading...</p>}>
-            {/* @ts-expect-error Server Component */}
-            <PhraseList deck={params.deck} />
+        <Suspense fallback={<p>Loading Addcard </p>}>
+            <AddCard
+                deck_id={_id} 
+                user={params.user}
+                inlang={deck.inlang}
+                outlang={deck.outlang}
+            />
         </Suspense>
+        <div className="
+            flex-1
+            justify-self-center 
+            justify-end
+            self-stretch
+            font-thin
+            text-xl
+        ">
+            <h2 className=" separator h-24 text-base03 leading-loose text-5xl bg-app pb-2 text-light">
+                Deck
+            </h2>
+
+            <Suspense fallback={<p>Loading...</p>}>
+                {/* @ts-expect-error Server Component */}
+                <PhraseList deck={params.deck} />
+            </Suspense>
+        </div>
         <ExportDeck deck={params.deck} user={params.user} article="is"/>
     </div>
     )

@@ -103,13 +103,13 @@ export default function AddCard(
 
 
     return (
-        <li className="flex flex-row h-48 mb-5 px-1 my-1 text-3xl justify-between mt-4">
-            <div className="px-1 justify-self-start">
+        <li className="flex flex-row h-64 px-1 text-3xl justify-between ">
+            <div className="px-1 w-2/5 h-16 justify-self-start bg-app">
                 <AddCardInput
                     term={term}
                     handleInputChange={handleInputChange}/>
             </div>
-            <div className="px-1 justify-self-end">
+            <div className="px-1 w-3/5  h-full justify-self-end">
                 {resultcards}
             </div>
         </li>

@@ -1,0 +1,46 @@
+
+import Link from 'next/link';
+
+export default function DeckPreviewCardLoading( { key }: { key: number }){
+
+    const widths = ['w-48', 'w-64', 'w-52']
+    let width = widths[key%widths.length]
+
+    return (
+        <Link className='' href={''}>
+            <li key={key} className="
+                text-base03
+                flex flex-row
+                rounded 
+                px-1
+                h-16
+                group
+                overflow-hidden
+            ">
+                <SelectSVG className='scale-125 translate-y-2 transition-opacity opacity-0 group-hover:opacity-100 px-1 '/>
+                <div className='flex flex-col flex-start w-full'>
+                    <h3 className={`${width} animate-pulse bg-base2 h-8 text-3xl leading-none font-extralight truncate`}>  </h3>
+                    <div className='flex flex-row justify-between'>
+                        <h4 className='pl-2 text-sm leading-none'>GE -&gt; EN</h4>
+                        <h4 className='pl-2 text-sm leading-none'>10 Cards</h4>
+                    </div>
+                </div>
+            </li>
+        </Link>
+    )
+}
+
+// Contained here because it is merely a wrapper to the asset
+function SelectSVG(props: {
+        className: string
+    }){
+
+    return (
+        <div className={`${props.className} `}>
+            <svg width="3" height="49" viewBox="0 0 3 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0L3 0L3 49L0 45.4639L0 0Z" fill="#073642"/>
+            </svg>
+        </div>
+    )
+
+}
