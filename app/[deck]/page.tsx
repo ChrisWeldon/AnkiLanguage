@@ -36,7 +36,12 @@ export default async function DeckPage({
 
     // should make a request based on id from decktitel
     return (
-    <div className="flex flex-col content-center" >
+    <div className="flex
+        flex-col
+        content-center
+        h-full
+        mx-10
+    ">
         <DeckTitle title={title} />
 
         <AddCard

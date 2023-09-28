@@ -21,14 +21,18 @@ export default async function DeckList(props:{ }){
     if(session === null){
         // No decks as guest user
         return (
-            <ul className=" border-r-2 flex flex-col p-2 m-2 font-thin text-2xl">
-               <Link href={`/new-deck`}>New Deck</Link>
+            <ul className="
+                flex
+                flex-col
+                font-thin
+                flex-1
+                ">
             </ul>
         )
     }
 
     let decks = []
-    if(session.user!=null && session.user.email != null){
+    if(session!==null && session.user!=null && session.user.email != null){
         const user = UserModel.findOne( {email: session.user.email} )
         if(user!==null){
             const doc = await user.populate('decks')
@@ -41,9 +45,14 @@ export default async function DeckList(props:{ }){
     });
 
     return (
-        <ul className=" border-r-2 flex flex-col p-2 m-2 font-thin text-2xl">
+        <ul className="
+            flex-1
+            flex
+            flex-col
+            font-thin
+
+            ">
            {cards}
-           <Link href={`/new-deck`}>New Deck</Link>
         </ul>
     )
 }

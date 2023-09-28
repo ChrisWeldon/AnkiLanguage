@@ -11,9 +11,11 @@
       transparent 28px,
       transparent 32px
     );
+    background-attachment: scroll;
     /* The rectangle in which to repeat. 
        It can be fully wide in this case */
 }
+
 
 @variants group-hover, hover, focus {
     .notebook-input{

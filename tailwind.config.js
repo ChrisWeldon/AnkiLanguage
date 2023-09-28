@@ -31,16 +31,18 @@ module.exports = {
         borderColor: (theme) => ({
             "default": theme('colors.base1'),
             "hover": theme('colors.red')
-        })
+        }),
+        screens: {
 
-        
+        }
     },
   },
   plugins: [
   ],
   variants: {
       extend: {
-          backgroundColor: ['active']
+        backgroundColor: ['active'],
+
       }
   }
 }
