@@ -1,19 +1,11 @@
-import { Suspense } from 'react'
-import { redirect } from 'next/navigation'
-
-import PhraseList from './components/PhraseList'
-import DeckTitle from './components/DeckTitle'
-import AddCard from './components/AddCard'
-import ExportDeck from './components/ExportDeck'
-
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import getDeckByValueSession from '@/lib/database/getDeckByValueSession'
+import PhraseListLoading from './components/PhraseListLoading'
+import DeckTitleLoading from './components/DeckTitleLoading'
+import AddCardLoading from './components/AddCardLoading'
+import ExportDeckLoading from './components/ExportDeckLoading'
 
 
-export default function Loading({
-    params
-} : {
+
+export default function Loading({ params } : {
     params: {
         user: string,
         deck: string
@@ -30,16 +22,8 @@ export default function Loading({
         h-full 
         lined
     ">
-        <DeckTitle title={"Loading"} />
-
-        <Suspense fallback={<p>Loading Addcard </p>}>
-            <AddCard
-                deck_id={_id} 
-                user={params.user}
-                inlang={deck.inlang}
-                outlang={deck.outlang}
-            />
-        </Suspense>
+        <DeckTitleLoading />
+        <AddCardLoading />
         <div className="
             flex-1
             justify-self-center 
@@ -52,12 +36,9 @@ export default function Loading({
                 Deck
             </h2>
 
-            <Suspense fallback={<p>Loading...</p>}>
-                {/* @ts-expect-error Server Component */}
-                <PhraseList deck={params.deck} />
-            </Suspense>
+            <PhraseListLoading />
         </div>
-        <ExportDeck deck={params.deck} user={params.user} article="is"/>
+        <ExportDeckLoading/>
     </div>
     )
 }

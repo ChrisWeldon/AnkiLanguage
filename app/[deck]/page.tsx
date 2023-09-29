@@ -2,8 +2,10 @@ import { Suspense } from 'react'
 import { redirect } from 'next/navigation'
 
 import PhraseList from './components/PhraseList'
+import PhraseListLoading from './components/PhraseListLoading'
 import DeckTitle from './components/DeckTitle'
 import AddCard from './components/AddCard'
+import AddCardLoading from './components/AddCardLoading'
 import ExportDeck from './components/ExportDeck'
 
 import { getServerSession } from 'next-auth'
@@ -45,7 +47,7 @@ export default async function DeckPage({
     ">
         <DeckTitle title={title} />
 
-        <Suspense fallback={<p>Loading Addcard </p>}>
+        <Suspense fallback={<AddCardLoading />}>
             <AddCard
                 deck_id={_id} 
                 user={params.user}
@@ -65,7 +67,7 @@ export default async function DeckPage({
                 Deck
             </h2>
 
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={<PhraseListLoading />}>
                 {/* @ts-expect-error Server Component */}
                 <PhraseList deck={params.deck} />
             </Suspense>

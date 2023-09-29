@@ -1,12 +1,5 @@
-'use client';
-
-import React, { Dispatch } from 'react'
-
-export default function AddCardInput(
-    props: {
-        term: string,
-        handleInputChange: (e: any) => void
-    }
+export default function AddCardInputDisabled(
+    props: { }
 ){
     
     return (
@@ -21,9 +14,7 @@ export default function AddCardInput(
             id="input" 
             type="text"
             name="input"
-            value={props.term}
-            defaultValue={''}
-            onChange={props.handleInputChange}
+            value={''}
             placeholder={'Search for target'}
         />
     )
