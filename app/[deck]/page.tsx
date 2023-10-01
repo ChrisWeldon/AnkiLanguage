@@ -7,6 +7,7 @@ import DeckTitle from './components/DeckTitle'
 import AddCard from './components/AddCard'
 import AddCardLoading from './components/AddCardLoading'
 import ExportDeck from './components/ExportDeck'
+import LanguageHeader from './components/LanguageHeader'
 
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
@@ -66,6 +67,7 @@ export default async function DeckPage({
             <h2 className=" separator h-24 text-base03 leading-loose text-5xl bg-app pb-2 text-light">
                 Deck
             </h2>
+            <LanguageHeader inlang={deck.inlang} outlang={deck.outlang}/>
 
             <Suspense fallback={<PhraseListLoading />}>
                 {/* @ts-expect-error Server Component */}
