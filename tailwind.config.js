@@ -38,8 +38,8 @@ module.exports = {
                 '50%': { transform: 'translateX(70%)' }
             },
             noteload:{
-                '0%, 100% ': { backgroundPosition: '50% 0%;' },
-                '50%': { backgroundPosition: '0% 0%;' }
+                '0%, 100%': { backgroundPosition: '0% 0%;' },
+                '50%': { backgroundPosition: '50% 0%;' }
             }
 
         },

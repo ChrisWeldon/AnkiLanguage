@@ -10,6 +10,7 @@ import AddCardInput from "./AddCardInput";
 import Result from "./Result";
 import { LanguageCode } from '@/lib/ankitool/langs';
 import { ObjectId } from 'mongodb';
+import Arrow from '@/icons/arrow';
 
 
 export default function AddCard(
@@ -104,10 +105,11 @@ export default function AddCard(
 
     return (
         <li className="flex flex-row h-64 px-1 text-3xl justify-between ">
-            <div className="px-1 w-2/5 h-16 justify-self-start bg-app">
+            <div className="px-1 w-2/5 h-8 justify-self-start bg-app flex flex-row">
                 <AddCardInput
                     term={term}
                     handleInputChange={handleInputChange}/>
+                <Arrow height={36} width={36}/>
             </div>
             <div className="px-1 w-3/5  h-full justify-self-end">
                 {resultcards}

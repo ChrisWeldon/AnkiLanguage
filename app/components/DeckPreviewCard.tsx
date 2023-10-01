@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import TrashcanIcon  from '@/icons/trashcan'
 import PageDivider from './PageDivider';
+import Arrow from '@/icons/arrow';
 
 export default function DeckPreviewCard(
     props: {
@@ -23,7 +24,7 @@ export default function DeckPreviewCard(
                 <div className='flex flex-col flex-start w-full'>
                     <h3 className='h-8 text-3xl leading-none font-extralight truncate'> {props.title} </h3>
                     <div className='flex flex-row justify-between'>
-                        <h4 className='pl-2 text-sm leading-none'>GE -&gt; EN</h4>
+                        <h4 className='pl-2 text-sm leading-none flex flex-row'>GE <Arrow height={16} width={16}/> EN</h4>
                         <h4 className='pl-2 text-sm leading-none'>10 Cards</h4>
                     </div>
                 </div>
