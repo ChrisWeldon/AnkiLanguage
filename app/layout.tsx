@@ -33,8 +33,7 @@ export default function RootLayout({
                         justify-self-start
                         w-1/6
                         min-w-64
-                        h-[48rem]
-                        min-h-fit
+                        min-h-[48rem]
 
                         mx-10
                         lined
@@ -42,7 +41,9 @@ export default function RootLayout({
                         flex flex-col
                         justify-between
                         ">
-                        <NewDeck className={'p-0 h-16 bg-app unline text-left text-3xl leading-none font-light italic'} />
+                        <div className='flex flex-col justify-end h-16 mb-8 p-0 text-5xl leading-none font-light italic'>
+                            <NewDeck className={''} />
+                        </div>
 
                         <Suspense fallback={<DeckListLoading/>}>
                             {/* @ts-expect-error Server Component */}

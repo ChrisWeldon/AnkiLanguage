@@ -17,7 +17,7 @@ export default function AuthHeader(){
     const handleSignout = () => {
         signOut({redirect: false})
         router.refresh()
-        router.push('/auth/signin')
+        router.push(`/auth/signin?${Math.random().toString()}`)
     }
 
     if(status === 'authenticated' && session.user){

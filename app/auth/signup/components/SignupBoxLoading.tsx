@@ -15,7 +15,6 @@ export default function SignupBox() {
                 type='text'
                 required
                 className="
-                    animate-noteload
                     pl-2
                     w-full
                     rounded-xl
@@ -40,7 +39,6 @@ export default function SignupBox() {
                 type='text' 
                 required
                 className="
-                    animate-noteload
                     pl-2
                     w-full
                     rounded-xl
@@ -65,7 +63,6 @@ export default function SignupBox() {
                 type='password' 
                 required
                 className="
-                    animate-noteload
                     pl-2
                     w-full
                     rounded-xl

@@ -13,7 +13,6 @@ export default function LoginBox() {
                 type='text'
                 required
                 className="
-                    animate-noteload
                     pl-2
                     w-full
                     rounded-xl
@@ -38,7 +37,6 @@ export default function LoginBox() {
                 type='password'
                 required
                 className="
-                    animate-noteload
                     pl-2
                     w-full
                     rounded-xl

@@ -115,7 +115,7 @@ export default function AddCard(
 
     return (
         <li className="flex flex-row h-64 px-1 text-3xl justify-between ">
-            <div className="px-1 w-2/5 h-8 justify-self-start bg-app flex flex-row">
+            <div className="px-1 w-2/5 h-8 justify-self-start bg-app flex flex-row space-x-2">
                 <AddCardInput
                     term={term}
                     handleInputChange={handleInputChange}/>
