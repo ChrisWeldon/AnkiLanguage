@@ -41,7 +41,14 @@ export default async function DeckList(props:{ }){
     } 
 
     let cards = decks.map((deck: DeckType) => {
-        return <DeckPreviewCard key={deck.value} title={deck.title} value={deck.value} />
+        return <DeckPreviewCard
+                    key={deck.value}
+                    title={deck.title}
+                    value={deck.value}
+                    inlang={deck.inlang}
+                    outlang={deck.outlang}
+                    cardcount={deck.translations.length}
+                />
     });
 
     return (

@@ -6,6 +6,7 @@ export default function AddCardInputDisabled(
         <input 
             className="
                 animate-noteload
+                rounded-t-lg
                 h-8
                 text-3xl
                 text-normal
