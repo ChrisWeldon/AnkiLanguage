@@ -35,7 +35,7 @@ module.exports = {
         keyframes: {
             tofro: {
                 '0%, 100%': { transform: 'translateX(0%)' },
-                '50%': { transform: 'translateX(70%)' }
+                '50%': { transform: 'translateX(50%)' }
             },
             noteload:{
                 '0%, 100%': { backgroundPosition: '0% 0%;' },
