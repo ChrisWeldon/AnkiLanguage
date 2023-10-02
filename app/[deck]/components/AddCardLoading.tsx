@@ -10,9 +10,7 @@ export default function AddCardLoading(){
         <li className="flex flex-row h-64 px-1 text-3xl justify-between ">
             <div className="px-1 w-2/5 h-8 justify-self-start bg-app flex flex-row space-x-2">
                 <AddCardInputDisabled />
-                <div className={'animate-spin'}>
-                    <Spinner height={32} width={32}/>
-                </div>
+                <Spinner className="animate-spin" height={32} width={32}/>
             </div>
 
             <div className="px-1 w-3/5  h-full justify-self-end">

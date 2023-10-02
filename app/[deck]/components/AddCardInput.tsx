@@ -13,13 +13,13 @@ export default function AddCardInput(
         <input 
             className="
                 h-8
-                rounded-t-lg
                 text-3xl
                 text-normal
                 leading-none
+
                 bg-base3  border-b-2
                 border-base00 focus:bg-base2 outline-none
-
+                rounded-t-lg
 
                 pl-2
                 w-full

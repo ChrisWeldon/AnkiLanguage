@@ -68,12 +68,14 @@ export default async function DeckPage({
                 Deck
             </h2>
             <LanguageHeader inlang={deck.inlang} outlang={deck.outlang}/>
-
+            
+            {/* TODO: CHANGE this to use deck OBJECTid*/}
             <Suspense fallback={<PhraseListLoading />}>
                 {/* @ts-expect-error Server Component */}
                 <PhraseList deck={params.deck} />
             </Suspense>
         </div>
+        {/* TODO: CHANGE this to use deck OBJECTid*/}
         <ExportDeck deck={params.deck} user={params.user} article="is"/>
     </div>
     )

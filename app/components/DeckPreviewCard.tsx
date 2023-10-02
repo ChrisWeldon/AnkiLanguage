@@ -1,8 +1,11 @@
+"use client"
+
 import Link from 'next/link';
 import TrashcanIcon  from '@/icons/trashcan'
 import PageDivider from './PageDivider';
 import Arrow from '@/icons/arrow';
 import { LanguageCode } from '@/lib/ankitool/langs';
+import { usePathname } from 'next/navigation'
 
 export default function DeckPreviewCard(
     props: {
@@ -13,6 +16,9 @@ export default function DeckPreviewCard(
         cardcount: number
     }
 ){
+    const pathname = usePathname()
+    /// TODO here, card preview highlight based on navigation
+
     return (
         <Link className='' href={`/${props.value}`}>
             <li key={props.value} className="
@@ -24,7 +30,12 @@ export default function DeckPreviewCard(
                 group
                 overflow-hidden
             ">
-                <SelectSVG className='scale-125 translate-y-2 transition-opacity opacity-0 group-hover:opacity-100 px-1 '/>
+                <SelectSVG className={ `
+                    scale-125 translate-y-2 
+                    transition-opacity opacity-0 
+                    ${pathname === `/${props.value}`? 'opacity-100' : 'group-hover:opacity-50'  }
+                    px-1 
+                    ` }/>
                 <div className='flex flex-col flex-start w-full'>
                     <h3 className='h-8 text-3xl leading-none font-extralight truncate'> {props.title} </h3>
                     <div className='flex flex-row justify-between'>

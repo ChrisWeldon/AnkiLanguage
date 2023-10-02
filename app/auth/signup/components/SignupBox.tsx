@@ -173,6 +173,8 @@ export default function SignupBox() {
                     bg-transparent
                     notebook-input
                     notebook-unfocused
+                    text-green
+                    hover:font-light
                     hover:notebook-hover
                     active:notebook-focused
 

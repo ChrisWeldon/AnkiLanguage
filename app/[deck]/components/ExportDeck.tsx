@@ -1,7 +1,7 @@
 'use client'
 
 import { useSession } from "next-auth/react";
-
+import Link from "next/link";
 
 export default function ExportDeck(
     props: { // TODO replace with the type definition from translation library
@@ -12,16 +12,20 @@ export default function ExportDeck(
 ){
     const { data: session } = useSession()
     // TODO make export compiled on frontend 
-    const fileLink = `http://localhost:3000/api/u/${props.user}/d/${props.deck}/file`;
+    const fileLink = `http://localhost:3000/api/file/?deck=${props.deck}`;
 
 
     return (
-        <a href={
+        <Link href={
             `${fileLink}?${new URLSearchParams({article: props.article})}`
             }
-            className="border border-default rounded max-w-xs hover:border-hover"
+            className="
+                border 
+                border-default 
+                rounded max-w-xs 
+                hover:border-hover"
         >
             Download Deck { session ? " as logged in" : "as guest"}
-        </a>
+        </Link>
    )
 }

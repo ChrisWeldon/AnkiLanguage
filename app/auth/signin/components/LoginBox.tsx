@@ -110,12 +110,14 @@ export default function LoginBox() {
                     bg-transparent
                     notebook-input
                     notebook-unfocused
+                    text-green
+                    hover:font-light
                     hover:notebook-hover
                     active:notebook-focused
 
             "/>
         </form>
-        <Link href="/auth/signup"> signup</Link>
+        <Link href="/auth/signup" className="transition-all no-underline hover:underline"> signup</Link>
         <p className='h-8'>{message}</p>
         </>
     )
