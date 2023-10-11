@@ -8,12 +8,16 @@ import Author from './components/Author'
 import NewDeck from './components/NewDeck'
 import PageDivider from './components/PageDivider'
 import { Suspense } from 'react'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+
+    const session = await getServerSession(authOptions)
   return (
     <html lang="en">
           {/*
@@ -41,8 +45,12 @@ export default function RootLayout({
                         flex flex-col
                         justify-between
                         ">
+                        {/*This is to avoid people trying to make new decks before login. Will eventually allow in later feature*/}
                         <div className='flex flex-col justify-end h-16 mb-8 p-0 text-5xl leading-none font-light italic'>
-                            <NewDeck className={''} />
+                            {session===null ? 
+                                <div></div>:
+                                <NewDeck className={''} />
+                            }
                         </div>
 
                         <Suspense fallback={<DeckListLoading/>}>

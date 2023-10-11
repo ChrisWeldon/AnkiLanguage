@@ -12,9 +12,6 @@ export default function DashboardLayout({
             {children}
             <div className="h-64 xl:h-32">
             </div>
-            <div>
-                <Link href='https://chriswevans.com'>chriswevans.com</Link>
-            </div>
         </div>
     </section>
   );
