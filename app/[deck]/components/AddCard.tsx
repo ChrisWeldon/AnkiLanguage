@@ -10,6 +10,7 @@ import AddCardInput from "./AddCardInput";
 import Result from "./Result";
 import { LanguageCode } from '@/lib/ankitool/langs';
 import { ObjectId } from 'mongodb';
+import Arrow from '@/icons/arrow';
 
 
 export default function AddCard(
@@ -26,6 +27,8 @@ export default function AddCard(
     
     const [latestSearch, setLatestSearch] = useState<number>(0);
 
+    const [loadingResults, setLoadingResults] = useState<boolean>(false)
+
     const router = useRouter();
 
     const API_ADDRESS = typeof window === 'undefined' ? 
@@ -37,6 +40,7 @@ export default function AddCard(
     }
 
     const handleInputChange = (event: SyntheticEvent<{ value: string}>) => {
+        // TODO: FIX DEBOUNCE PLS
         let payload = {
             input: event.currentTarget.value,
             inlang: props.inlang,
@@ -46,6 +50,8 @@ export default function AddCard(
         // NOTE: is this atomic???
         setLatestSearch(latestSearch+1)
         const id = latestSearch
+
+        setLoadingResults(true)
 
         fetch(`http://localhost:3000/api/targetsearch/`, {
             cache: 'no-store',
@@ -57,11 +63,16 @@ export default function AddCard(
         })
             .then((res)=>res.json())
             .then((res)=>{
+                setLoadingResults(false)
                 if(id >= latestSearch){
                     setResults(res)
                 }
             })
-            .catch(err =>console.error(err))
+            .catch((err) =>{
+                    console.error(err)
+                    setLoadingResults(false)
+                }
+            )
 
         if(event != undefined){
             setTerm(event.currentTarget.value);
@@ -103,13 +114,16 @@ export default function AddCard(
 
 
     return (
-        <li className="flex flex-row h-48 mb-5 px-1 my-1 text-3xl justify-between mt-4">
-            <div className="px-1 justify-self-start">
+        <li className="flex flex-row h-64 px-1 text-3xl justify-between ">
+            <div className="px-1 w-2/5 h-8 justify-self-start bg-app flex flex-row space-x-2">
                 <AddCardInput
                     term={term}
                     handleInputChange={handleInputChange}/>
+                <div className={ loadingResults ? 'animate-tofro' : ''}>
+                    <Arrow height={36} width={36}/>
+                </div>
             </div>
-            <div className="px-1 justify-self-end">
+            <div className="px-1 w-3/5  h-full justify-self-end">
                 {resultcards}
             </div>
         </li>

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function DashboardLayout({
   children, // will be a page or nested layout
 }: {
@@ -9,10 +11,6 @@ export default function DashboardLayout({
         <div className='h-screen xl:h-auto flex lined flex-col items-center '>
             {children}
             <div className="h-64 xl:h-32">
-            </div>
-            <div>
-                <p>Chris W. Evans</p>
-                <a>chriswevans.com</a>
             </div>
         </div>
     </section>

@@ -23,7 +23,7 @@ export default function Phrase(
 
 
     return (
-        <li className="flex flex-row px-1 my-1 text-3xl justify-between">
+        <li className="flex flex-row h-8 leading-none px-1 text-3xl justify-between">
             <PhraseInputMeat phrase={props.input} />
             <div className="px-1 justify-self-end flex flex-row items-center">
                 {props.target[0].text} {target_gender}

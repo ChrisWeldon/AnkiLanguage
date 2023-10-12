@@ -31,16 +31,30 @@ module.exports = {
         borderColor: (theme) => ({
             "default": theme('colors.base1'),
             "hover": theme('colors.red')
-        })
+        }),
+        keyframes: {
+            tofro: {
+                '0%, 100%': { transform: 'translateX(0%)' },
+                '50%': { transform: 'translateX(50%)' }
+            },
+            noteload:{
+                '0%, 100%': { backgroundPosition: '0% 0%;' },
+                '50%': { backgroundPosition: '50% 0%;' }
+            }
 
-        
+        },
+        animation: {
+            tofro: 'tofro 2s ease-in-out infinite',
+            noteload: 'noteload 2s ease-in-out infinite'
+        },
     },
   },
   plugins: [
   ],
   variants: {
       extend: {
-          backgroundColor: ['active']
+        backgroundColor: ['active'],
+
       }
   }
 }

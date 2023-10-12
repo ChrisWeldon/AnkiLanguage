@@ -1,25 +1,19 @@
-'use client';
-
-import React, { Dispatch } from 'react'
-
-export default function AddCardInput(
-    props: {
-        term: string,
-        handleInputChange: (e: any) => void
-    }
+export default function AddCardInputDisabled(
+    props: { }
 ){
     
     return (
         <input 
             className="
+                animate-noteload
+                rounded-t-lg
                 h-8
                 text-3xl
                 text-normal
                 leading-none
-
                 bg-base3  border-b-2
                 border-base00 focus:bg-base2 outline-none
-                rounded-t-lg
+
 
                 pl-2
                 w-full
@@ -33,14 +27,12 @@ export default function AddCardInput(
                 hover:notebook-hover
                 focus:outline-none
                 focus:notebook-focused
-                
-                " 
+
+            "
             id="input" 
             type="text"
             name="input"
-            value={props.term}
-            defaultValue={''}
-            onChange={props.handleInputChange}
+            value={''}
             placeholder={'Search for target'}
         />
     )
