@@ -8,6 +8,9 @@ import AddCard from './components/AddCard'
 import AddCardLoading from './components/AddCardLoading'
 import ExportDeck from './components/ExportDeck'
 import LanguageHeader from './components/LanguageHeader'
+import DeckStats from './components/DeckStats'
+import DeckStatsLoading from './components/DeckStatsLoading'
+
 
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
@@ -76,7 +79,6 @@ export default async function DeckPage({
             </Suspense>
         </div>
         {/* TODO: CHANGE this to use deck OBJECTid*/}
-        <ExportDeck deck={params.deck} user={params.user} article="is"/>
     </div>
     )
 }

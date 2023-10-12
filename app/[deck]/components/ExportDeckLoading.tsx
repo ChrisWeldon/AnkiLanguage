@@ -1,5 +1,5 @@
 
-export default function ExportDeck(
+export default function ExportDeckLoading(
     props: { }
 ){
 
