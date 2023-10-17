@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/dbConnect'
-import { Deck } from '@/lib/ankitool/'
+import { Deck } from '@/lib/ankitool/anki'
 import { getLanguage } from  '@/lib/ankitool/langs'
 
 import { DeckModel, DeckType } from '@/models/Deck'
@@ -14,20 +14,16 @@ type MessageReponse = {
     err?: string | undefined
 }
 
-export async function GET(req: NextRequest):  Promise< NextResponse<MessageReponse> >{
+export async function GET(req: NextRequest):  Promise< NextResponse<MessageReponse | string> >{
     await dbConnect();
     TranslationModel
 
-    // the double await is we handle the read-stream for now. 
-    const request = await req.json()
-    const body = await request.body
 
-    
     var deck : DeckType | null = null
-    if(req.nextUrl.searchParams.has('deck') && req.nextUrl.searchParams.get('deck') != null){
+    if(req.nextUrl.searchParams.has('deck_id') && req.nextUrl.searchParams.get('deck_id') != null){
         deck = await DeckModel.findOne({
             $or: [
-                {value: req.nextUrl.searchParams.get('deck') },
+                {_id: req.nextUrl.searchParams.get('deck_id') },
             ]
         })
     } 
@@ -37,6 +33,9 @@ export async function GET(req: NextRequest):  Promise< NextResponse<MessageRepon
     }
 
     const doc = await deck.populate('translations')
+
+
+
 
     // TODO: Validate input query as WordRequestOptions
     let inlang = getLanguage(doc.inlang)
@@ -60,7 +59,7 @@ export async function GET(req: NextRequest):  Promise< NextResponse<MessageRepon
         article
     }
 
-    let apkg = Deck(options)
+    let deckfile = Deck(options)
 
     const ANKI_OUTPUT_DIR = process.env.ANKI_OUTPUT_DIR
     if(ANKI_OUTPUT_DIR === undefined){
@@ -68,30 +67,16 @@ export async function GET(req: NextRequest):  Promise< NextResponse<MessageRepon
     }
 
     doc.translations.forEach((translation: DBTranslation) => {
-       apkg.addCard(translation) 
+       deckfile.addCard(translation) 
     });
 
-    // User file management
-    var filePath = "./public/deck.apkg"
-    await apkg.export(filePath)
 
-    const stat = fs.statSync(filePath)
-
-
-
-
-    //var downloadStream = fs.createReadStream(filePath)
-    //await new Promise(function(resolve){
-        //downloadStream.pipe(res)
-        //downloadStream.on('end', resolve)
-    //})
-
-    return NextResponse.json({ message: "files not implemented yet" }, {
+    return NextResponse.json({message: deckfile.txt()}, {
         status: 200,
         headers: {
-            'Content-Type': 'application/apkg',
-            'Content-Length': stat.size,
-            'Content-Disposition': `attachment; filename=${options.deck_name}.apkg`
+            'Content-Type': 'application/json',
+//            'Content-Length': stat.size,
+            'Content-Disposition': `attachment; filename=${options.deck_name}`
         }
     })
 

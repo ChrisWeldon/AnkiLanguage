@@ -23,44 +23,34 @@
 
 import path from 'path'
 import fs from 'fs'
-import AnkiExport from 'anki-apkg-export'
-//const AnkiExport  = require('anki-apkg-export').default;
-
-// apkg.addMedia('anki.png', fs.readFileSync('anki.png'));
-
-var style =
-`.card {
-font-family: baskerville;
-font-size: 30px;
-text-align: center;
-color: black;
-background-color: #FFFFFF;}
-
-#gender {
-    font-style: bold;
-}
-
-.card1 { background-color: #FFFFFF; }
-.card2 { background-color: #FFFFFF; }
-
-`
+import { getLanguage } from '../langs'
 
 
-function article(word: string, request: WordRequestOptions,
+var style = `.card { font-family: baskerville; font-size: 30px; text-align: center; color: black; background-color: #FFFFFF;} #gender { font-style: bold; } .card1 { background-color: #FFFFFF; } .card2 { background-color: #FFFFFF; }`
+
+
+export function article(word: string, request: WordRequestOptions,
                 lang: 'target_lang' | 'input_lang' ,
                 gender: string | undefined){
 
     if(gender===undefined){
         return ""
     }
-    if(request[lang].genders[gender] == undefined){
+
+    if(request[lang] === undefined){
+        return ""
+    }
+    if(getLanguage(request[lang]).genders[gender] == undefined){
         return '';
     }
-    return request[lang].genders[gender][request.article](word);
+    return getLanguage(request[lang]).genders[gender][request.article](word);
 }
 
-function card(request: WordRequestOptions, style: string){
+export function card(request: WordRequestOptions, style: string){
     // A card closure for applying styling and cli options
+    //
+    //
+
     return {
         compBack: (translation: Translation, image_src?: string) => {
             const { target } = translation
@@ -68,72 +58,76 @@ function card(request: WordRequestOptions, style: string){
             if( target[0] === undefined ){
                 return ""
             }
+            let word_string = target.map(( t ) => {
+                return `${ target ? article(t.text, request, 'target_lang', target[0].gender) : ""} ${maroonspan(t.text)}`
+            }).join("; ")
 
             // FIXME: Indexing target
-            return `<div class="card">
-                ${
-                    target.map(( t ) => {
-                        return `${ target ?
-                            article(t.text, request, 'target_lang', target[0].gender) : ""}
-                            <span style="color:maroon">
-                                ${t}
-                            </span>`
-                    }).join("; ")
-                }
-                ${ request.opts.includes('images') && image_src !== undefined ? `<br> <img src="${image_src}"> <br>`: ``}
-            </div>
-            <style> ${style} </style>`
+            return div(
+                `${word_string} ${request.opts.includes('images') && image_src !== undefined ? `<br> <img src='${image_src}'> <br>`: ``}`
+            )
         },
         compFront: (translation: Translation) => {
             const { input } = translation
-            return `
-                <div class="card">
-                    <span id="gender">${article(input.text, request, 'input_lang', input.gender)}</span>
-                    ${input}
-                </div>
-                <style>${style}</style>`
+
+            return div(
+                `${genderspan(article(input.text, request, 'input_lang', input.gender))} ${input.text}`
+            )
         },
         speakBack:(translation: Translation) => {
             const { input } = translation
-            return `<div class="card">
-                <span style="color:maroon">
-                    ${ input.gender ? `<span id="gender"> ${
-                        article(input.text, request, 'input_lang', input.gender)
-                    }</span>`: ``}${input}
-                </span>
-            </div>
-            <style> ${style} </style>`
+
+            return div(maroonspan(
+                `${ input.gender ? `${ genderspan(article(input.text, request, 'input_lang', input.gender)) }`: ``}${input.text}`
+            ))
         },
         speakFront: (translation: Translation, image_src?: string) => {
             const { target } = translation
             // called image.jpg because there is only one image
-            return `
-            <div class="card">
-                ${
-                    target.reduce(( prev, current ) => {
-                        `${prev.text}${current.text};`
-                    }, {text:"", language: "EN"})}
-                ${ request.opts.includes('images') && image_src !== undefined? `<br> <img src="${image_src}"> <br>`: ``}
-            </div><style>${style}</style>`
+            //let word_string = target.reduce(( prev, current ) => { return `${prev}${current.text};` }, {text:"", language: "EN"})
+
+            let word_string = target.map(( t ) => {
+                return `${ target ? article(t.text, request, 'target_lang', target[0].gender) : ""} ${t.text}`
+            }).join("; ")
+
+            return div(
+                `${word_string} ${ request.opts.includes('images') && image_src !== undefined? `<br> <img src='${image_src}'> <br>`: ``}`
+            )
         }
     }
 
 }
 
+const div = (o: string) =>{
+    return `<div class='card'>${o}</div><style>${style}</style>`
+}
+
+const maroonspan = (o: string) => {
+    return `<span style='color:maroon'>${o}</span>`
+}
+const genderspan = (o: string) => {
+    return `<span id='gender'>${o}</span>`
+}
+
+
+
 // FIXME: this does not need to be async. It is just a factory
-function Deck(request: WordRequestOptions){ // A deck builder for building out a deck const { deck_name } = request;
+export function Deck(request: WordRequestOptions){ // A deck builder for building out a deck const { deck_name } = request;
     const { deck_name, } = request
-    const apkg = new AnkiExport(deck_name)
     const { compBack, compFront, speakFront, speakBack } = card(request, style);
+
+    let cards: string[] = []
+
+    console.log(request)
 
     let deck = {
         addCard: async ( word: Translation ) => {
             try{
                 if(request.opts.includes('speak')){
-                    apkg.addCard(speakFront(word), speakBack(word));
+                    cards.push(`${compFront(word)}|${compBack(word)}`)
                 }
                 if(request.opts.includes('comp')){
-                    apkg.addCard(compFront(word), compBack(word));
+                    cards.push(`${speakFront(word)}|${speakBack(word)}`)
                 }
                 return deck
             }catch(err){
@@ -141,19 +135,25 @@ function Deck(request: WordRequestOptions){ // A deck builder for building out a
             }
         },
         export: (path: string) => {
-            return apkg.save()
-                // Zip is some internal library type that I don't care to find atm
-                .then( (zip: any) => {
-                    fs.writeFileSync(path, zip, 'binary')
-                    return deck
-                })
-                .catch((err: any) => console.log(err))
+            // TODO save to apkg file. This was deprecated by removal of apkg file
+        },
+        txt: () => {
+            // create the textfile version
+
+            let cards_string = cards.reduce(
+                (tot, el) => `${tot}\n${el}`
+            )
+
+            //let cards_string = "<div class='card'>Bonjour</div><style>.card {color:red;}</style> | <div>Heya</div>"
+
+            return( `#separator:|\n#html:true\n#columns:Front|Back\n${cards_string}`)
+            //return cards_string
+        
         }
+
     }
 
     return deck;
 }
 
-module.exports = {
-    Deck
-};
+
