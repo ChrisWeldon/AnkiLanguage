@@ -8,8 +8,6 @@ import AddCard from './components/AddCard'
 import AddCardLoading from './components/AddCardLoading'
 import ExportDeck from './components/ExportDeck'
 import LanguageHeader from './components/LanguageHeader'
-import DeckStats from './components/DeckStats'
-import DeckStatsLoading from './components/DeckStatsLoading'
 
 
 import { getServerSession } from 'next-auth'
@@ -39,6 +37,10 @@ export default async function DeckPage({
     }
 
     const { title, _id } = deck;
+
+    if(_id === undefined){
+        redirect('/')
+    }
 
     // should make a request based on id from decktitel
     return (
@@ -70,7 +72,12 @@ export default async function DeckPage({
             <h2 className=" separator h-24 text-base03 leading-loose text-5xl bg-app pb-2 text-light">
                 Deck
             </h2>
-            <LanguageHeader inlang={deck.inlang} outlang={deck.outlang}/>
+            <LanguageHeader 
+                inlang={deck.inlang} 
+                outlang={deck.outlang} 
+                deck_id={_id}
+                deck_value={params.deck}
+            />
             
             {/* TODO: CHANGE this to use deck OBJECTid*/}
             <Suspense fallback={<PhraseListLoading />}>
