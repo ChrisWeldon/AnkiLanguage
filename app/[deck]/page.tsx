@@ -38,6 +38,10 @@ export default async function DeckPage({
 
     const { title, _id } = deck;
 
+    if(_id === undefined){
+        redirect('/')
+    }
+
     // should make a request based on id from decktitel
     return (
     <div className="
@@ -68,7 +72,12 @@ export default async function DeckPage({
             <h2 className=" separator h-24 text-base03 leading-loose text-5xl bg-app pb-2 text-light">
                 Deck
             </h2>
-            <LanguageHeader inlang={deck.inlang} outlang={deck.outlang} deck_id={_id}/>
+            <LanguageHeader 
+                inlang={deck.inlang} 
+                outlang={deck.outlang} 
+                deck_id={_id}
+                deck_value={params.deck}
+            />
             
             {/* TODO: CHANGE this to use deck OBJECTid*/}
             <Suspense fallback={<PhraseListLoading />}>

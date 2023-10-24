@@ -4,8 +4,6 @@ import { getLanguage } from  '@/lib/ankitool/langs'
 
 import { DeckModel, DeckType } from '@/models/Deck'
 import { DBTranslation, TranslationModel } from '@/models/Translation'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import fs from 'fs'
 import { NextRequest, NextResponse } from 'next/server'
 
 type MessageReponse = {

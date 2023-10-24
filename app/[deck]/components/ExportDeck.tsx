@@ -10,6 +10,7 @@ export default function ExportDeck(
     props: { // TODO replace with the type definition from translation library
         deck_id: ObjectId,
         article: string
+        deck_value: string
     }
 ){
     // TODO make export compiled on frontend 
@@ -23,10 +24,9 @@ export default function ExportDeck(
         , {cache: 'no-store'})
 
         let data = await res.json()
-        console.log(data.message)
 
         //fileDownload(text.substr(1, text.length-2), 'example.txt')
-        fileDownload(`${data.message}`, 'example.txt')
+        fileDownload(`${data.message}`, `${props.deck_value}.txt`)
 
     }
 
