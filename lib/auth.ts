@@ -18,6 +18,7 @@ const credProvider = CredentialsProvider({
     },
     async authorize(credentials, req){
         UserModel
+
         if(credentials === undefined ){
             return null
         }
@@ -25,15 +26,11 @@ const credProvider = CredentialsProvider({
         await dbConnect();
         const potentialUser = await UserModel.findOne({ email : credentials.email}).exec()
 
-        // TODO encrypt
-        const pass_match = bcrypt.compare(credentials.password, potentialUser.password)
+        const pass_match = await bcrypt.compare(credentials.password, potentialUser.password)
        
         if(potentialUser && pass_match){
             return potentialUser;
         }else{
-            // Idiot NextAuth has builtin redirects but are not up to date on Next13
-            //   Thus we need to return an empty session and now check if session not valid.
-            //   The correct way is to return 'null' but that causes unwanted side effects from NextAuth
             console.log(`Attempted sign in for ${credentials.email}. Invalid sign in.`)
             return false
         }
