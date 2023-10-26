@@ -84,9 +84,6 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
     }
 
 
-    console.log(`CREATE DECK SESSION ID: ${JSON.stringify( session )}`)
-
-
     const deck = new DeckModel({
         _id: new Types.ObjectId,
         title: body.title.trim(),
@@ -94,7 +91,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
         inlang: body.inlang,
         outlang: body.outlang,
         translations: [],
-        owner: session.user._id // idk this error, yes it is in next-auth.d.ts
+        owner: session.user._id 
     }) 
 
     try{

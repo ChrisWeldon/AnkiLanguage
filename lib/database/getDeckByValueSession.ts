@@ -15,6 +15,7 @@ async function getDeckByValueSession(value: string, session: Session) : Promise<
         const res = await DeckModel.findOne( {owner: session.user._id, value: value} )
         if(res!==null){
             deck = await res.populate('translations')
+
         }
     } 
     
