@@ -12,9 +12,10 @@ async function getDeckByValueSession(value: string, session: Session) : Promise<
     let deck = null
     // verifying auth
     if(session.user!=null && session.user._id != null){
-        const res = await DeckModel.findOne( {ownder: session.user._id, value: value} )
+        const res = await DeckModel.findOne( {owner: session.user._id, value: value} )
         if(res!==null){
             deck = await res.populate('translations')
+
         }
     } 
     

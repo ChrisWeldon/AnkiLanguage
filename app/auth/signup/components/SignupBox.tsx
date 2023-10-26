@@ -54,7 +54,7 @@ export default function SignupBox() {
 
         if(!validatePassword(password)){
             //Password must be between 6 to 20 characters, \n contain at least one numeric digit, \n one uppercase and one lowercase letter
-            setMessage(`Invalid password `)
+            setMessage(`Password must between 6-20 characters and one capital.`)
             setPassword('')
             return
         }

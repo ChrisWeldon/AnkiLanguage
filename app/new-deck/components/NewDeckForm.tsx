@@ -19,6 +19,7 @@ type FormOption = {
 export default function NewDeckForm({}){
 
     const router = useRouter();
+    const [message, setMessage] = useState("")
 
     const [form, setForm] = useState<DeckForm>({
         decktitle: "",
@@ -63,6 +64,7 @@ export default function NewDeckForm({}){
 
     const handleSubmit = async (e: SyntheticEvent<{value: any}>) => { 
         e.preventDefault()
+        setMessage("")
         setLoadingSubmit(true)
         const payload = {
             title: form.decktitle,
@@ -79,11 +81,15 @@ export default function NewDeckForm({}){
             body: JSON.stringify(payload)
         })
 
-        setLoadingSubmit(false)
         if(!res.ok){
+            
             console.log(res)
             setForm({...form, decktitle: ""})
             // TODO: Throw message
+        }
+        if(res.status > 400){
+            setMessage(res.statusText)
+            return
         }
         
         const deck = await res.json()
@@ -93,6 +99,7 @@ export default function NewDeckForm({}){
     }
 
     return (
+            <>
             <form className="flex flex-col w-full items-center">
                 <input className={
                     `
@@ -174,6 +181,10 @@ export default function NewDeckForm({}){
                     onClick={handleSubmit}
                 />
             </form>
+            <br/>
+            <br/>
+            <p className='h-8'>{message}</p>
+            </>
 
    )
 

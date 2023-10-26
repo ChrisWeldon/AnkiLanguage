@@ -63,21 +63,25 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
     const body = await req.json()
 
     if(urlConvert(body.title)==="new-deck"){
-        return NextResponse.json({ error: `Deck with title ${body.title.trim()} not allowed.` }, {status: 403 })
+        return NextResponse.json({ error: `Deck with title ${body.title.trim()} not allowed.` }, {status: 403, statusText: `Deck with title ${body.title.trim()} not allowed.`  })
     }
+
     
     if(urlConvert(body.title)===""){
-        return NextResponse.json({ error: `Deck with empty title not allowed.` }, {status: 403})
+        return NextResponse.json({ error: `Deck with empty title not allowed.` }, {status: 403, statusText:`Deck with empty title not allowed.` })
     }
 
 
     var user = await UserModel.findOne( {email: session.user.email})
 
     if(user===null){
-        return NextResponse.json({ error: "This User no longer exists"}, {status: 500})
+        return NextResponse.json({ error: "This User no longer exists"}, {status: 500, statusText: "This User no longer exists"})
     }
 
-    console.log(`CREATE DECK SESSION ID: ${JSON.stringify( session )}`)
+
+    if(await DeckModel.findOne( {owner: session.user._id, title: urlConvert(body.title)} )){
+        return NextResponse.json({ error: "This deck already exists"}, {status: 403, statusText: "This deck already exists"})
+    }
 
 
     const deck = new DeckModel({
@@ -87,7 +91,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
         inlang: body.inlang,
         outlang: body.outlang,
         translations: [],
-        owner: session?._id // idk this error, yes it is in next-auth.d.ts
+        owner: session.user._id 
     }) 
 
     try{
