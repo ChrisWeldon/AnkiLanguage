@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'
 import Error from 'next/error'
 import type { SyntheticEvent } from 'react';
@@ -11,7 +11,7 @@ import Result from "./Result";
 import { LanguageCode } from '@/lib/ankitool/langs';
 import { ObjectId } from 'mongodb';
 import Arrow from '@/icons/arrow';
-import { SyncIndexesError } from 'mongoose';
+import debounce from '@/lib/helpers/debounce';
 
 
 export default function AddCard(
@@ -38,20 +38,6 @@ export default function AddCard(
     if(API_ADDRESS === undefined){
         return <Error statusCode={500}/>;
     }
-
-    function debounce(callback: (...args: any[])=>any , timeout:number=300): (...args: any[])=>void{
-
-        let timer: ReturnType<typeof setTimeout>;
-
-        return (...args: any[]) => {
-            clearTimeout(timer)
-            timer = setTimeout(()=>{
-                callback(args)
-            }, timeout)
-        }
-
-    }
-
 
     const handleInputChange = (event: SyntheticEvent<{ value: string }>) => {
         debounce(() => fetchSearchResults(event.currentTarget.value));
