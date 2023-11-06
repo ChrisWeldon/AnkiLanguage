@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'
 import Error from 'next/error'
 import type { SyntheticEvent } from 'react';
@@ -11,6 +11,7 @@ import Result from "./Result";
 import { LanguageCode } from '@/lib/ankitool/langs';
 import { ObjectId } from 'mongodb';
 import Arrow from '@/icons/arrow';
+import debounce from '@/lib/helpers/debounce';
 
 
 export default function AddCard(
@@ -25,7 +26,6 @@ export default function AddCard(
     const [term, setTerm] = useState<string>("")
     const [results, setResults] = useState<DBTranslation[]>([])
     
-    const [latestSearch, setLatestSearch] = useState<number>(0);
 
     const [loadingResults, setLoadingResults] = useState<boolean>(false)
 
@@ -39,17 +39,17 @@ export default function AddCard(
         return <Error statusCode={500}/>;
     }
 
-    const handleInputChange = (event: SyntheticEvent<{ value: string}>) => {
-        // TODO: FIX DEBOUNCE PLS
+    const handleInputChange = (event: SyntheticEvent<{ value: string }>) => {
+        debounce(() => fetchSearchResults(event.currentTarget.value));
+    }
+
+
+    const fetchSearchResults = (input: string) => {
         let payload = {
-            input: event.currentTarget.value,
+            input,
             inlang: props.inlang,
             outlang: props.outlang
         }
-
-        // NOTE: is this atomic???
-        setLatestSearch(latestSearch+1)
-        const id = latestSearch
 
         setLoadingResults(true)
 
@@ -64,19 +64,13 @@ export default function AddCard(
             .then((res)=>res.json())
             .then((res)=>{
                 setLoadingResults(false)
-                if(id >= latestSearch){
-                    setResults(res)
-                }
+                setResults(res)
             })
             .catch((err) =>{
                     console.error(err)
                     setLoadingResults(false)
                 }
             )
-
-        if(event != undefined){
-            setTerm(event.currentTarget.value);
-        }
     }
 
     // this is a closure to for low level handling
