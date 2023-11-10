@@ -64,7 +64,8 @@ export async function GET(req: NextRequest):  Promise< NextResponse<MessageRepon
         return NextResponse.json({message: "ANKI_OUTPUT_DIR not defined"}, {status: 500})
     }
 
-    doc.translations.forEach((translation: DBTranslation) => {
+    // TODO: fix any typing 
+    doc.translations.forEach((translation: any) => {
        deckfile.addCard(translation) 
     });
 

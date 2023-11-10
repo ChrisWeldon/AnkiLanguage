@@ -13,6 +13,9 @@ export default async function PhraseList(
     }
 ){
 
+    // ignoring this because it seems to be deeply seeded next-auth ts prob
+    // TODO: Fix error
+    /*@ts-ignore*/
     const session = await getServerSession(authOptions)
 
     if(session === null){
