@@ -16,7 +16,7 @@ import debounce from '@/lib/helpers/debounce';
 
 export default function AddCard(
     props: {
-        deck_id: ObjectId,
+        deck_id: ObjectId | undefined,
         user: string,
         inlang: LanguageCode,
         outlang: LanguageCode
@@ -31,9 +31,10 @@ export default function AddCard(
 
     const router = useRouter();
 
-    const API_ADDRESS = process.env.NEXT_PUBLIC_API_URL;
+    const API_ADDRESS = typeof window === 'undefined' ? 
+        process.env.API_ADDRESS_PRIVATE :
+        process.env.NEXT_PUBLIC_API_ADDRESS_PUBLIC;
 
-    // I think this is the cause of the brief error
     if(API_ADDRESS === undefined){
         return <Error statusCode={500}/>;
     }
@@ -52,7 +53,7 @@ export default function AddCard(
 
         setLoadingResults(true)
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/targetsearch/`, {
+        fetch(`http://localhost:3000/api/targetsearch/`, {
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/json'
@@ -75,7 +76,7 @@ export default function AddCard(
     // this is a closure to for low level handling
     const handleResultSelect = (result: Translation) => {
         return (event: SyntheticEvent<{}>) => {
-            fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/translations/?deck=${props.deck_id}`, {
+            fetch(`http://localhost:3000/api/translations/?deck=${props.deck_id}`, {
                 cache: 'no-store',
                 headers: {
                     'Content-Type': 'application/json'
