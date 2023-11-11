@@ -24,6 +24,7 @@ export default async function DeckPage({
     }
 }) {
 
+    // TODO: fix this
     // @ts-ignore
     const session = await getServerSession(authOptions) 
 

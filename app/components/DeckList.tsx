@@ -14,8 +14,7 @@ export default async function DeckList(props:{ }){
     
     // TODO: make generic the data access functions
 
-    // TODO: try using getSession(req) hook
-    //
+    // @ts-ignore
     const session = await getServerSession(authOptions)
 
     if(session === null){

@@ -18,7 +18,6 @@ const credProvider = CredentialsProvider({
     },
     async authorize(credentials, req){
         UserModel
-
         if(credentials === undefined ){
             return null
         }
@@ -42,10 +41,11 @@ export const authOptions = {
         credProvider
     ],
     callbacks:{
-        async jwt({ token, user, account, profile }){
+        // TODO take away explicit any definition
+        async jwt({ token , user, account, profile }: {token: any, user: any, account: any, profile: any}){
             return token
         },
-        async session({ session, token, user}){
+        async session({ session,  token, user}: {session: any, token: any, user: any}){
             // Pinning user id to the session for easier access
             if(token.sub){
                 session.user._id = token.sub
