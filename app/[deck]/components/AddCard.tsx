@@ -72,8 +72,8 @@ export default function AddCard(
     const fetchSearchResultsD = useCallback( debounce(fetchSearchResults, 150) , [])
 
     const handleInputChange = (event: SyntheticEvent<{ value: string }>) => {
-        fetchSearchResultsD(event.target.value);
-        setTerm(event.target.value)
+        fetchSearchResultsD(event.currentTarget.value);
+        setTerm(event.currentTarget.value)
     }
 
     // this is a closure to for low level handling
