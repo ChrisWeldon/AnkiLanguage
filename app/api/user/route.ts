@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) : Promise<NextResponse<UserType | Me
     await dbConnect()
 
     // Not yet implemented in app directory yet
+    //@ts-ignore
     const session = await getServerSession(authOptions)
 
     if(session === null){
