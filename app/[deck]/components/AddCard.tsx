@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback} from 'react';
 import { useRouter } from 'next/navigation'
 import Error from 'next/error'
 import type { SyntheticEvent } from 'react';
@@ -16,7 +16,7 @@ import debounce from '@/lib/helpers/debounce';
 
 export default function AddCard(
     props: {
-        deck_id: ObjectId | undefined,
+        deck_id: ObjectId,
         user: string,
         inlang: LanguageCode,
         outlang: LanguageCode
@@ -31,18 +31,12 @@ export default function AddCard(
 
     const router = useRouter();
 
-    const API_ADDRESS = typeof window === 'undefined' ? 
-        process.env.API_ADDRESS_PRIVATE :
-        process.env.NEXT_PUBLIC_API_ADDRESS_PUBLIC;
+    const API_ADDRESS = process.env.NEXT_PUBLIC_API_URL;
 
+    // I think this is the cause of the brief error
     if(API_ADDRESS === undefined){
         return <Error statusCode={500}/>;
     }
-
-    const handleInputChange = (event: SyntheticEvent<{ value: string }>) => {
-        debounce(() => fetchSearchResults(event.currentTarget.value));
-    }
-
 
     const fetchSearchResults = (input: string) => {
         let payload = {
@@ -50,10 +44,11 @@ export default function AddCard(
             inlang: props.inlang,
             outlang: props.outlang
         }
+        console.log('Fetching search results')
 
         setLoadingResults(true)
 
-        fetch(`http://localhost:3000/api/targetsearch/`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/targetsearch/`, {
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/json'
@@ -73,10 +68,17 @@ export default function AddCard(
             )
     }
 
+    const fetchSearchResultsD = useCallback( debounce(fetchSearchResults, 150) , [])
+
+    const handleInputChange = (event: SyntheticEvent<{ value: string }>) => {
+        fetchSearchResultsD(event.currentTarget.value);
+        setTerm(event.currentTarget.value)
+    }
+
     // this is a closure to for low level handling
     const handleResultSelect = (result: Translation) => {
         return (event: SyntheticEvent<{}>) => {
-            fetch(`http://localhost:3000/api/translations/?deck=${props.deck_id}`, {
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/translations/?deck=${props.deck_id}`, {
                 cache: 'no-store',
                 headers: {
                     'Content-Type': 'application/json'
@@ -87,11 +89,13 @@ export default function AddCard(
             .then((res)=>res.json())
             .then((res)=>{
                 router.refresh()
-                setTerm("")
-                // FIXME: There is no guarentee that old results dont come in first
             })
             .catch(err =>console.error(err))
         }
+    }
+
+    if(API_ADDRESS === undefined){
+        return <Error statusCode={500}/>;
     }
 
 
