@@ -3,6 +3,7 @@ import PhraseInputMeat from './PhraseInputMeat'
 export default function PhraseLoading(
     props: { // TODO replace with the type definition from translation library
         i: number,
+        children: JSX.Element | JSX.Element[] | string | string
     }
 ){
    
@@ -16,6 +17,7 @@ export default function PhraseLoading(
             <div className={ ` bg-base2 px-1 justify-self-start flex flex-row items-center ${width[0]} h-7` }>
             </div>
             <div className={ ` bg-base2 px-1 justify-self-end flex flex-row items-center ${width[1]} h-7` }>
+                {props.children}
             </div>
         </li>
     )

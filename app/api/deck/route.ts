@@ -18,8 +18,7 @@ type MessageResponse = {
 export async function GET(req: NextRequest) : Promise<NextResponse<DeckType[] | DeckType | MessageResponse>> {
     TranslationModel // Mongoose model needs reference to be compiled
     await dbConnect()
-    
-    //@ts-ignore
+
     const session = await getServerSession(authOptions)
 
     
@@ -48,8 +47,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
     DeckModel
     TranslationModel // Mongoose model needs reference to be compiled
     await dbConnect()
-
-    //@ts-ignore
+    // figure out a better way to worry about this
+    //
     const session = await getServerSession(authOptions)
 
     if(!session){

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useCallback} from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'
 import Error from 'next/error'
 import type { SyntheticEvent } from 'react';
@@ -38,13 +38,17 @@ export default function AddCard(
         return <Error statusCode={500}/>;
     }
 
+    const handleInputChange = (event: SyntheticEvent<{ value: string }>) => {
+        debounce(() => fetchSearchResults(event.currentTarget.value));
+    }
+
+
     const fetchSearchResults = (input: string) => {
         let payload = {
             input,
             inlang: props.inlang,
             outlang: props.outlang
         }
-        console.log('Fetching search results')
 
         setLoadingResults(true)
 
@@ -68,13 +72,6 @@ export default function AddCard(
             )
     }
 
-    const fetchSearchResultsD = useCallback( debounce(fetchSearchResults, 150) , [])
-
-    const handleInputChange = (event: SyntheticEvent<{ value: string }>) => {
-        fetchSearchResultsD(event.currentTarget.value);
-        setTerm(event.currentTarget.value)
-    }
-
     // this is a closure to for low level handling
     const handleResultSelect = (result: Translation) => {
         return (event: SyntheticEvent<{}>) => {
@@ -89,13 +86,11 @@ export default function AddCard(
             .then((res)=>res.json())
             .then((res)=>{
                 router.refresh()
+                setTerm("")
+                // FIXME: There is no guarentee that old results dont come in first
             })
             .catch(err =>console.error(err))
         }
-    }
-
-    if(API_ADDRESS === undefined){
-        return <Error statusCode={500}/>;
     }
 
 
