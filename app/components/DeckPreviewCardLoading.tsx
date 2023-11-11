@@ -22,7 +22,7 @@ export default function DeckPreviewCardLoading( { i }: { i: number }){
                     <h3 className={`${width} animate-pulse bg-base2  h-8 text-3xl leading-none font-extralight truncate`}>  </h3>
                     <div className='flex flex-row justify-between pt-1'>
                         <h4 className='pl-2 ext-sm leading-none'>
-                        <div className="animate-pulse bg-base2 h-4 w-16"></div></h4>
+                        <div class="animate-pulse bg-base2 h-4 w-16"></div></h4>
                         <h4 className='animate-pulse pl-2 text-sm leading-none bg-base2 h-4 w-12'></h4>
                     </div>
                 </div>

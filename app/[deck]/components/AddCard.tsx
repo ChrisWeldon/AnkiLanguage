@@ -31,13 +31,12 @@ export default function AddCard(
 
     const router = useRouter();
 
-    const API_ADDRESS = typeof window === 'undefined' ? 
-        process.env.API_ADDRESS_PRIVATE :
-        process.env.NEXT_PUBLIC_API_ADDRESS_PUBLIC;
+    const API_ADDRESS = process.env.NEXT_PUBLIC_API_URL;
 
-    
-
-
+    // I think this is the cause of the brief error
+    if(API_ADDRESS === undefined){
+        return <Error statusCode={500}/>;
+    }
 
     const fetchSearchResults = (input: string) => {
         let payload = {
@@ -49,7 +48,7 @@ export default function AddCard(
 
         setLoadingResults(true)
 
-        fetch(`http://localhost:3000/api/targetsearch/`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/targetsearch/`, {
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/json'
@@ -79,7 +78,7 @@ export default function AddCard(
     // this is a closure to for low level handling
     const handleResultSelect = (result: Translation) => {
         return (event: SyntheticEvent<{}>) => {
-            fetch(`http://localhost:3000/api/translations/?deck=${props.deck_id}`, {
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/translations/?deck=${props.deck_id}`, {
                 cache: 'no-store',
                 headers: {
                     'Content-Type': 'application/json'
