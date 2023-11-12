@@ -40,10 +40,15 @@ export function article(word: string, request: WordRequestOptions,
     if(request[lang] === undefined){
         return ""
     }
-    if(getLanguage(request[lang]).genders[gender] == undefined){
+    let language = getLanguage(request[lang])
+
+    if(language===undefined){
+        return ''
+    }
+    if(language.genders[gender] == undefined){
         return '';
     }
-    return getLanguage(request[lang]).genders[gender][request.article](word);
+    return language.genders[gender][request.article](word);
 }
 
 export function card(request: WordRequestOptions, style: string){
