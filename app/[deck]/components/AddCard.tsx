@@ -64,11 +64,6 @@ export default function AddCard(
     }
 
     const fetchSearchResultsD = useCallback( debounce(fetchSearchResults, 150) , [])
-    //
-    // I think this is the cause of the brief error
-    if(API_ADDRESS === undefined){
-        return <Error statusCode={500}/>;
-    }
 
     const handleInputChange = (event: SyntheticEvent<{ value: string }>) => {
         fetchSearchResultsD(event.currentTarget.value);
