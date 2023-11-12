@@ -43,7 +43,7 @@ export default function AddCard(
 
         setLoadingResults(true)
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/targetsearch/`, {
+        fetch(`${API_ADDRESS}/api/targetsearch/`, {
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/json'
@@ -78,7 +78,7 @@ export default function AddCard(
     // this is a closure to for low level handling
     const handleResultSelect = (result: Translation) => {
         return (event: SyntheticEvent<{}>) => {
-            fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/translations/?deck=${props.deck_id}`, {
+            fetch(`${API_ADDRESS}/api/translations/?deck=${props.deck_id}`, {
                 cache: 'no-store',
                 headers: {
                     'Content-Type': 'application/json'
