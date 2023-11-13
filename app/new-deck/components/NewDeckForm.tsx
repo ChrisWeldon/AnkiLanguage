@@ -72,7 +72,8 @@ export default function NewDeckForm({}){
             outlang: form.outlang,
             include_images: form.images
         }
-        const res = await fetch(`http://localhost:3000/api/deck`, {
+        const API_ADDRESS = process.env.NEXT_PUBLIC_API_URL;
+        const res = await fetch(`/api/deck`, {
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/json'

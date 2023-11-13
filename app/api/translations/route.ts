@@ -14,8 +14,6 @@ type MessageReponse = {
 
 export async function GET(req: NextRequest): Promise<NextResponse<DBTranslation[] | DBTranslation | MessageReponse>>{
     await dbConnect()
-    
-    // 63c1833f1ea4c45599badc9f example
 
     var deck : DeckType | null = null
     if(req.nextUrl.searchParams.has('deck') &&

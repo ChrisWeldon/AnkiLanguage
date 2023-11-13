@@ -31,7 +31,6 @@ export default function AddCard(
 
     const router = useRouter();
 
-    const API_ADDRESS = process.env.NEXT_PUBLIC_API_URL;
 
     const fetchSearchResults = (input: string) => {
         let payload = {
@@ -43,7 +42,7 @@ export default function AddCard(
 
         setLoadingResults(true)
 
-        fetch(`${API_ADDRESS}/api/targetsearch/`, {
+        fetch(`/api/targetsearch/`, {
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/json'
@@ -73,7 +72,7 @@ export default function AddCard(
     // this is a closure to for low level handling
     const handleResultSelect = (result: Translation) => {
         return (event: SyntheticEvent<{}>) => {
-            fetch(`${API_ADDRESS}/api/translations/?deck=${props.deck_id}`, {
+            fetch(`/api/translations/?deck=${props.deck_id}`, {
                 cache: 'no-store',
                 headers: {
                     'Content-Type': 'application/json'
@@ -88,12 +87,6 @@ export default function AddCard(
             .catch(err =>console.error(err))
         }
     }
-
-    if(API_ADDRESS === undefined){
-        return <Error statusCode={500}/>;
-    }
-
-
 
 
     let resultcards = results.map((result: Translation, i) =>
