@@ -1,6 +1,4 @@
 import Phrase from './Phrase'
-import AddCard from './AddCard'
-import Error from 'next/error'
 import DeleteButton from './DeleteButton';
 import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth';
@@ -32,7 +30,6 @@ export default async function PhraseList(
     // TODO fix any should be TranslationType
     //
 
-    const API_ADDRESS = process.env.NEXT_PUBLIC_API_URL;
 
     let cards = deck.translations.map((translation: any, i: number) =>{
         return <Phrase 
@@ -41,7 +38,7 @@ export default async function PhraseList(
                 target = { translation.target }
                 >
                     <DeleteButton 
-                        deleteURL={`${API_ADDRESS}/api/translations/?id=${translation._id}`}
+                        deleteURL={`/api/translations/?id=${translation._id}`}
                         />
                 </Phrase>
     })
