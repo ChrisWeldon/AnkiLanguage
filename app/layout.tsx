@@ -1,5 +1,7 @@
 import '../global.css'
 
+import { Analytics } from '@vercel/analytics/react'
+
 import LandingHeader from './components/LandingHeader'
 import { AuthProvider } from './components/AuthProvider'
 import DeckList from './components/DeckList'
@@ -68,6 +70,7 @@ export default async function RootLayout({
                     </div>
                 </div>
               </AuthProvider>
+              <Analytics/>
           </body>
     </html>
   )
