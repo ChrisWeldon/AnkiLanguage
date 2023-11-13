@@ -14,15 +14,9 @@ export default function ExportDeck(
     }
 ){
     
-    const API_ADDRESS = process.env.NEXT_PUBLIC_API_URL;
 
-    if(API_ADDRESS === undefined){
-        return <Error statusCode={500}/>;
-    }
     // TODO make export compiled on frontend 
-    const fileLink = `${API_ADDRESS}/api/file`;
-    
-
+    const fileLink = `/api/file`;
 
     const handleButton = async () =>{
         let res = await fetch(
