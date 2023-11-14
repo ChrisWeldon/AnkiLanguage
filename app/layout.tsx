@@ -4,14 +4,16 @@ import { Analytics } from '@vercel/analytics/react'
 
 import LandingHeader from './components/LandingHeader'
 import { AuthProvider } from './components/AuthProvider'
-import DeckList from './components/DeckList'
-import DeckListLoading from './components/DeckListLoading'
-import Author from './components/Author'
-import NewDeck from './components/NewDeck'
 import PageDivider from './components/PageDivider'
 import { Suspense } from 'react'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import ServerSideBar from './components/ServerSideBar'
+import MobileSideBar from './components/MobileSideBar'
+import MobileDetect from 'mobile-detect'
+import { headers } from 'next/headers'
+import DeckList from './components/DeckList'
+import DeckListLoading from './components/DeckListLoading'
 
 export default async function RootLayout({
   children,
@@ -21,57 +23,65 @@ export default async function RootLayout({
 
     // @ts-ignore
     const session = await getServerSession(authOptions)
-  return (
-    <html lang="en">
-          {/*
-            <head /> will contain the components returned by the nearest parent
-            head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-          */}
-          <head />
-          <body className='container scrollable-element min-h-screen min-w-screen px-2 flex flex-col bg-app text-2xl font-thin text-base00'>
-              <AuthProvider >
-                <LandingHeader/>
-                <div className="
-                    flex-grow
-                    flex flex-row
-                    min-w-screen">
-                
+
+    const headersInstance = headers()
+    const md = new MobileDetect(headersInstance.get('user-agent') as string)
+    const isMobile = md.mobile() !== null
+
+    
+    let SideBar = (
+        <>
+            {/* @ts-expect-error Server Component */}
+            <ServerSideBar/>
+        </>
+    )
+    if(isMobile){
+        SideBar = (<MobileSideBar>
+            <Suspense fallback={<DeckListLoading/>}>
+                {/* @ts-expect-error Server Component */}
+                <DeckList/> 
+            </Suspense>
+        </MobileSideBar>)
+    }
+
+    return (
+        <html lang="en">
+              {/*
+                <head /> will contain the components returned by the nearest parent
+                head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
+              */}
+              <head />
+              <body className='
+                container
+                scrollable-element
+                min-h-screen
+                min-w-screen
+                flex
+                flex-col
+                bg-app
+                text-2xl
+                font-thin
+                text-base00
+                md:px-2
+              '>
+                  <AuthProvider >
+                    <LandingHeader/>
                     <div className="
-                        justify-self-start
-                        w-1/6
-                        min-w-64
-                        min-h-[48rem]
-
-                        mx-10
-                        lined
-
-                        flex flex-col
-                        justify-between
+                        flex-grow
+                        flex flex-row
+                        min-w-screen
+                        relative
                         ">
-                        {/*This is to avoid people trying to make new decks before login. Will eventually allow in later feature*/}
-                        <div className='flex flex-col justify-end h-16 mb-8 p-0 text-5xl leading-none font-light italic'>
-                            {session===null ? 
-                                <div></div>:
-                                <NewDeck className={''} />
-                            }
-                        </div>
-
-                        <Suspense fallback={<DeckListLoading/>}>
-                            {/* @ts-expect-error Server Component */}
-                            <DeckList/> 
-                        </Suspense>
-                        <div className="bg-app">
-                            <Author className={''}/>
+                     
+                        {SideBar}
+                        {!isMobile ? <PageDivider className={' mx-4 flex-shrink-0 '} />:<></>}
+                        <div className="flex-1 flex-shrink-0 justify-self-stretch mx-10 ">
+                            {children}
                         </div>
                     </div>
-                    <PageDivider className={' mx-4 flex-shrink-0 '} />
-                    <div className="flex-1 flex-shrink-0 justify-self-stretch mx-10 ">
-                        {children}
-                    </div>
-                </div>
-              </AuthProvider>
-              <Analytics/>
-          </body>
-    </html>
-  )
+                  </AuthProvider>
+                  <Analytics/>
+              </body>
+        </html>
+    )
 }
