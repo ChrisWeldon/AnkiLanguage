@@ -11,17 +11,20 @@ export default function LandingHeader(){
     return (
         <div className="
             flex 
-            px-5 
-            py-3 
             w-full
             
-            h-36 
             flex-row 
-            justify-between
+            flex-wrap
+
+            md:justify-between
+            md:h-36 
+
+            px-5 
+            py-3 
             ">
-            <div>
+            <div className={``}>
                 <h1 className="text-4xl md:text-4xl lg:text-6xl text-base03 font-thin ">Anki Language</h1>
-                <h2 className="collapse sm:visible"> Make Anki language decks fast</h2>
+                <h2 className="collapse h-0 sm:h-fit sm:visible"> Make Anki language decks fast</h2>
             </div>
             <AuthHeader/>
         </div>

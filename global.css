@@ -15,6 +15,19 @@
     /* The rectangle in which to repeat. 
        It can be fully wide in this case */
 }
+.lined-dark {
+    background: repeating-linear-gradient(
+      #eee8d5,
+      #eee8d5 27px,
+      #93a1a1 27px,
+      #93a1a1 28px,
+      #eee8d5 28px,
+      #eee8d5 32px
+    );
+    background-attachment: scroll;
+    /* The rectangle in which to repeat. 
+       It can be fully wide in this case */
+}
 
 .separator {
   display: flex;

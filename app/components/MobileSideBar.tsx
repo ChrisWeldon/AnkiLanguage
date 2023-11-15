@@ -25,23 +25,27 @@ export default function MobileSideBar(props: {
 
     return (
         <div className={`
+            lined-dark
             z-10
             flex
             flex-row
             justify-between
             transition-all
             absolute
-            bg-cyan
             top-0
             w-screen
             ${isOpen ? 'left-0' : '-left-full' }
         `}>
-            { props.children }
+            <div className={`
+                flex
+                flex-col
+            `}> 
+                { props.children }
+            </div>
             <div className={`
                 transition-all
                 relative
                 -right-10
-                bg-red
                 ${isOpen ? 'right-0' : '-right-10' }
             `
             } onClick={()=>setIsOpen(!isOpen)}>
@@ -51,8 +55,21 @@ export default function MobileSideBar(props: {
                 `}>
                     <Arrow height={36} width={36}/>
                 </div>
-                <PageDivider className={' mx-2 flex-shrink-0 '} />
+                <SideBarSVG className={' mx-2 flex-shrink-0 '} />
             </div>
+        </div>
+    )
+
+}
+
+function SideBarSVG(props: {
+        className: string
+    }){
+    return (
+        <div className={`${props.className} `}>
+            <svg width="10" height="600" viewBox="0 0 10 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0L10 0L10 600L0 595.4639L0 0Z" fill="#073642"/>
+            </svg>
         </div>
     )
 

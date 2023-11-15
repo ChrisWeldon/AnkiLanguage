@@ -25,16 +25,15 @@ export default function AuthHeader(){
             <div className="
                 flex 
                 flex-row
-                py-2 
-                space-x-4
+                w-full
+                justify-between
+                md:py-2 
+                md:space-x-4
                 items-start 
-                justify-end
+                md:justify-end
 
             ">
-                <p className="
-                    collapse
-                    md:visible
-                ">
+                <p className={``} >
                     Hello, {session.user.email}
                 </p>
                 <button onClick={()=>handleSignout()}><span className="underline">signout</span></button>

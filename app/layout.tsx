@@ -14,6 +14,7 @@ import MobileDetect from 'mobile-detect'
 import { headers } from 'next/headers'
 import DeckList from './components/DeckList'
 import DeckListLoading from './components/DeckListLoading'
+import NewDeck from './components/NewDeck'
 
 export default async function RootLayout({
   children,
@@ -38,6 +39,19 @@ export default async function RootLayout({
     if(isMobile){
         SideBar = (<MobileSideBar>
             <Suspense fallback={<DeckListLoading/>}>
+                {session===null ? 
+                    <div></div>:
+                    <NewDeck className={`
+                        bg-base02
+                        font-normal
+                        text-violet
+                        italic
+                        leading-none
+                        text-3xl
+                        mb-8
+                        p-0
+                    `} />
+                }
                 {/* @ts-expect-error Server Component */}
                 <DeckList/> 
             </Suspense>
