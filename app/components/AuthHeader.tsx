@@ -25,9 +25,10 @@ export default function AuthHeader(){
             <div className="
                 flex 
                 flex-row
-                w-full
+                w-fit
                 justify-between
                 md:py-2 
+                space-x-2
                 md:space-x-4
                 items-start 
                 md:justify-end
