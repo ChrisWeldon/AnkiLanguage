@@ -8,7 +8,7 @@ export default function SignupBox() {
         <>
         <form className="flex flex-col h-84 xl:max-w-md lined text-2xl font-thin italic px-2" >
             <label>
-                Email:
+                Username:
                 <input
                 disabled
                 name="username"
@@ -32,7 +32,7 @@ export default function SignupBox() {
                 "/>
             </label>
             <label>
-                Repeat Email:
+                Repeat Username:
                 <input
                 disabled
                 name="email_v"

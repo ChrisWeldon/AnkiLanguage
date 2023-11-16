@@ -24,7 +24,7 @@ export default function LandingHeader(){
             ">
             <div className={``}>
                 <h1 className="flex-1 text-4xl md:text-4xl lg:text-6xl text-base03 font-thin ">Anki Language</h1>
-                <h2 className="collapse h-0 sm:h-fit sm:visible"> Make Anki language decks fast</h2>
+                <h2 className="h-fit "> Make Anki language decks fast</h2>
             </div>
             <AuthHeader/>
         </div>
