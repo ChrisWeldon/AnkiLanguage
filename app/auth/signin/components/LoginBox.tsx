@@ -3,7 +3,6 @@
 import { SyntheticEvent, useState } from "react"
 import { signIn, useSession } from 'next-auth/react'
 import Link from "next/link"
-import validateEmail from "@/lib/helpers/validateEmail"
 import { useRouter } from "next/navigation"
 
 export default function LoginBox() {
@@ -26,13 +25,6 @@ export default function LoginBox() {
     const handleSubmit = async (e: SyntheticEvent<{}>) => {
         e.preventDefault()
 
-        if(!validateEmail(email)){
-            setMessage('Please enter a valid email')
-            setEmail('')
-            setPassword('')
-            return
-        }
-
         const res = await signIn("credentials", { redirect:false, email, password })
 
         if(res===undefined || res.error !== null){
@@ -49,7 +41,7 @@ export default function LoginBox() {
         <>
         <form className="flex flex-col h-84 xl:max-w-md lined text-2xl font-thin italic px-2" onSubmit={handleSubmit}>
             <label>
-                Email:
+                Username:
                 <input 
                 name="email"
                 type='text'

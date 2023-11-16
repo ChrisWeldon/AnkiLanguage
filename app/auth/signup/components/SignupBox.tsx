@@ -34,18 +34,10 @@ export default function SignupBox() {
     const handleSubmit = async (e: SyntheticEvent<{}>) => {
         e.preventDefault()
 
-        // First validate locally
-        
-        if(!validateEmail(email)){
-            setMessage('Please enter a valid email')
-            setEmail('')
-            setEmail_v('')
-            setPassword('')
-            return
-        }
+        // No validation of emails yet because the email functions as a usename 
 
         if(email !== email_v){
-            setMessage('Emails must match')
+            setMessage('Usernames must match must match')
             setEmail('')
             setEmail_v('')
             setPassword('')
@@ -87,7 +79,7 @@ export default function SignupBox() {
         <>
         <form className="flex flex-col h-84 xl:max-w-md lined text-2xl font-thin italic px-2" onSubmit={handleSubmit}>
             <label>
-                Email:
+                Username:
                 <input
                 name="username"
                 type='text'
@@ -112,7 +104,7 @@ export default function SignupBox() {
                 "/>
             </label>
             <label>
-                Repeat Email:
+                Repeat Username:
                 <input
                 name="email_v"
                 type='text' 
@@ -139,7 +131,7 @@ export default function SignupBox() {
             <label>
                 Password:
                 <input
-                name="username" 
+                name="password" 
                 type='password' 
                 value={password} 
                 required

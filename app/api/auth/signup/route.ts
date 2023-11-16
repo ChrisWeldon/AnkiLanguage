@@ -1,7 +1,6 @@
 import { Types } from 'mongoose'
 import { UserModel, UserType } from "@/models/User"
 import { NextResponse, NextRequest } from "next/server"
-import validateEmail from '@/lib/helpers/validateEmail'
 import { saltRounds } from '@/lib/auth'
 
 import bcrypt from 'bcrypt'
@@ -33,11 +32,6 @@ export async function POST(req : NextRequest): Promise< NextResponse< UserType |
         email: body.email
     }).exec()
 
-    // Check email is valid address
-    if(!validateEmail(body.email)){
-        console.log(`Attempt to create ${body.email} failed. Invalid email address.`)
-        return NextResponse.json({error: 'User with that email already exists'}, {status: 422, statusText: 'Invalid Email'})
-    }
 
     // Check email not already used
     if(veri.length>0){
