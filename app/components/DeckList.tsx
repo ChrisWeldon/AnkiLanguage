@@ -1,11 +1,10 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
-import Link from 'next/link'
 import { DeckModel, DeckType } from "@/models/Deck";
-import { UserModel } from '@/models/User';
 import DeckPreviewCard from "./DeckPreviewCard";
 import dbConnect from '@/lib/dbConnect';
+import getDecksSession from '@/lib/database/getDecksSession';
 
 
 export default async function DeckList(props:{ }){
@@ -30,14 +29,7 @@ export default async function DeckList(props:{ }){
         )
     }
 
-    let decks = []
-    if(session!==null && session.user!=null && session.user.email != null){
-        const user = UserModel.findOne( {email: session.user.email} )
-        if(user!==null){
-            const doc = await user.populate('decks')
-            decks = doc && doc.decks ? doc.decks : []
-        }
-    } 
+    let decks = await getDecksSession(session);
 
     let cards = decks.map((deck: DeckType) => {
         return <DeckPreviewCard
