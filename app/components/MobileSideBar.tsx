@@ -2,9 +2,6 @@
 
 import { useState, Suspense, useEffect} from 'react'
 import { usePathname } from 'next/navigation'
-import DeckList from './DeckList'
-import DeckListLoading from './DeckListLoading'
-import PageDivider from './PageDivider'
 import Arrow from '@/icons/arrow';
 
 
@@ -12,7 +9,7 @@ export default function MobileSideBar(props: {
             children: JSX.Element | JSX.Element[] | string | string
         }){
 
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
 
     const pathname = usePathname()
 
