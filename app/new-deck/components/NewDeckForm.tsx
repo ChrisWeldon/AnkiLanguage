@@ -105,8 +105,10 @@ export default function NewDeckForm({}){
                 <input className={
                     `
                         h-16 
-                        text-5xl 
-                        w-1/2
+                        text-3xl
+                        md:text-5xl 
+                        w-full
+                        md:w-1/2
 
                         bg-base3  border-b-2
                         border-base00 focus:bg-base2 outline-none
@@ -133,7 +135,10 @@ export default function NewDeckForm({}){
                 />
                 <div className='h-16 mt-8 flex flex-row w-full items-end justify-around'>
                     <label>
-                        <span className="text-3xl">Input Language</span> 
+                        <span className="
+                            text-xl
+                            md:text-3xl
+                        ">Input Language</span> 
                         <select
                          name="inlang"
                          className='px-1 mx-2 text-violet bg-base2 transition-all hover:underline '
@@ -144,7 +149,10 @@ export default function NewDeckForm({}){
                         </select>
                     </label>
                     <label>
-                        <span className="text-3xl">Target Language</span> 
+                        <span className="
+                            text-xl
+                            md:text-3xl
+                        ">Target Language</span> 
                         <select name="outlang"
                         className='px-1 mx-2 text-orange bg-base2 transition-all hover:underline '
                         onChange={handleTargetLangSelectChange}
