@@ -4,7 +4,17 @@ export default function DeckTitle(
     }
 ){
     return (
-        <h2 className="self-center h-16 leading-none text-base03 font-thin text-5xl">
+        <h2 className={`
+            self-center
+            h-16
+
+            leading-snug
+            sm:leading-none
+            text-base03
+            font-thin
+            text-4xl
+            sm:text-5xl
+        `}>
             <span className="bg-app">
                {props.title} 
            </span>

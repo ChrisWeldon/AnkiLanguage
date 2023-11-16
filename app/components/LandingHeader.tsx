@@ -9,10 +9,22 @@ export default function LandingHeader(){
     // Get server session is not supported by route handlers
 
     return (
-        <div className="flex flex-row px-5 py-3 h-36 justify-between">
-            <div>
-                <h1 className="text-6xl text-base03 font-thin ">Anki Language</h1>
-                <h2> Make Anki language decks fast</h2>
+        <div className="
+            flex 
+            w-full
+           
+            flex-col 
+            md:flex-row 
+
+            md:justify-between
+            md:h-36 
+
+            px-5 
+            py-3 
+            ">
+            <div className={``}>
+                <h1 className="flex-1 text-4xl md:text-4xl lg:text-6xl text-base03 font-thin ">Anki Language</h1>
+                <h2 className="collapse h-0 sm:h-fit sm:visible"> Make Anki language decks fast</h2>
             </div>
             <AuthHeader/>
         </div>

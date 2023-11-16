@@ -22,9 +22,22 @@ export default function AuthHeader(){
 
     if(status === 'authenticated' && session.user){
         return (
-            <div className="flex flex-row py-2 items-start space-x-4">
-            <p>Hello, {session.user.email}</p>
-            <button onClick={()=>handleSignout()}><span className="underline">signout</span></button>
+            <div className="
+                flex 
+                flex-row
+                w-fit
+                justify-between
+                md:py-2 
+                space-x-2
+                md:space-x-4
+                items-start 
+                md:justify-end
+
+            ">
+                <p className={``} >
+                    Hello, {session.user.email}
+                </p>
+                <button onClick={()=>handleSignout()}><span className="underline">signout</span></button>
             </div>
         )
 

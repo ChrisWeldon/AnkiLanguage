@@ -23,9 +23,26 @@ export default function Phrase(
 
 
     return (
-        <li className="flex flex-row h-8 leading-none px-1 text-3xl justify-between">
+        <li className="
+            flex
+            flex-col
+            md:flex-row
+            md:h-8
+            md:leading-none
+            px-1
+            leading-8
+            md:text-3xl
+            md:justify-between
+        ">
             <PhraseInputMeat phrase={props.input} />
-            <div className="px-1 justify-self-end flex flex-row items-center">
+            <div className="px-1 
+                md:justify-self-end 
+                flex 
+                flex-row 
+                items-center
+                self-end
+                md:self-start
+            ">
                 {props.target[0].text} {target_gender}
                 {props.children}
             </div>

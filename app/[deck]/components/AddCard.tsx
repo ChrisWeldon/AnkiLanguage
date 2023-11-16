@@ -38,7 +38,6 @@ export default function AddCard(
             inlang: props.inlang,
             outlang: props.outlang
         }
-        console.log('Fetching search results')
 
         setLoadingResults(true)
 
@@ -100,16 +99,35 @@ export default function AddCard(
 
 
     return (
-        <li className="flex flex-row h-64 px-1 text-3xl justify-between ">
-            <div className="px-1 w-2/5 h-8 justify-self-start bg-app flex flex-row space-x-2">
+        <li className="
+            flex 
+            flex-col
+            md:flex-row
+            h-64 px-1 
+            text-3xl
+            md:justify-between
+        ">
+            <div className="
+                px-1 
+                md:w-2/5
+                h-8
+                md:justify-self-start 
+                bg-app
+                flex 
+                flex-row
+                space-x-2">
                 <AddCardInput
                     term={term}
                     handleInputChange={handleInputChange}/>
-                <div className={ loadingResults ? 'animate-tofro' : ''}>
+                <div className={`rotate-90 sm:rotate-0 ${loadingResults ? 'animate-tofro' : ''}`}>
                     <Arrow height={36} width={36}/>
                 </div>
             </div>
-            <div className="px-1 w-3/5  h-full justify-self-end">
+            <div className="
+                px-1 
+                md:w-3/5  
+                md:h-full 
+                md:justify-self-end">
                 {resultcards}
             </div>
         </li>
