@@ -30,13 +30,15 @@ export default async function RootLayout({
     const isMobile = md.mobile() !== null
 
     
-    let SideBar = (
-        <>
-            {/* @ts-expect-error Server Component */}
-            <ServerSideBar/>
-        </>
-    )
-    if(isMobile){
+    let SideBar
+    if(!isMobile){
+        SideBar = (
+            <>
+                {/* @ts-expect-error Server Component */}
+                <ServerSideBar/>
+            </>
+        )
+    } else if(isMobile && session){
         SideBar = (<MobileSideBar>
             <Suspense fallback={<DeckListLoading/>}>
                 {session===null ? 

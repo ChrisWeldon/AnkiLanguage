@@ -4,13 +4,14 @@ import { useSession } from "next-auth/react"
 import { SyntheticEvent, useState } from "react"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 
 export default function AuthHeader(){
 
     // Get server session is not supported by route handlers
     const { data: session, status  } = useSession()
     const router = useRouter()
+    const pathname = usePathname()
 
     const [ signoutModal, setSignoutModal ] = useState(false) 
 
@@ -48,12 +49,20 @@ export default function AuthHeader(){
                 </div>
             </div>
         )
-    }else{
+    }else if(pathname != '/auth/signin'){
         return (
             <div className="flex flex-row py-2 items-start space-x-4">
                 <Link href='/auth/signin' className="underline">Sign in</Link>
             </div>
         )
+    }else{
+        return (
+            <div className="flex flex-row py-2 items-start space-x-4">
+                <div className="h-8 w-48">
+                </div>
+            </div>
+        )
+
     }
 
 }
