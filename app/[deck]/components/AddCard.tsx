@@ -105,7 +105,7 @@ export default function AddCard(
             md:flex-row
             h-64 px-1 
             text-3xl
-            justify-between
+            md:justify-between
         ">
             <div className="
                 px-1 
@@ -119,7 +119,7 @@ export default function AddCard(
                 <AddCardInput
                     term={term}
                     handleInputChange={handleInputChange}/>
-                <div className={ loadingResults ? 'animate-tofro' : ''}>
+                <div className={`rotate-90 sm:rotate-0 ${loadingResults ? 'animate-tofro' : ''}`}>
                     <Arrow height={36} width={36}/>
                 </div>
             </div>
@@ -127,7 +127,7 @@ export default function AddCard(
                 px-1 
                 md:w-3/5  
                 md:h-full 
-                justify-self-end">
+                md:justify-self-end">
                 {resultcards}
             </div>
         </li>

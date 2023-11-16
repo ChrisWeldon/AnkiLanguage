@@ -89,7 +89,15 @@ export default async function RootLayout({
                      
                         {SideBar}
                         {!isMobile ? <PageDivider className={' mx-4 flex-shrink-0 '} />:<></>}
-                        <div className="flex-1 flex-shrink-0 justify-self-stretch mx-10 ">
+                        <div className="
+                            flex-1
+                            flex-shrink-0
+                            justify-self-stretch
+                            mr-4
+                            ml-8
+                            md:mx-10
+                            overflow-hidden
+                        ">
                             {children}
                         </div>
                     </div>

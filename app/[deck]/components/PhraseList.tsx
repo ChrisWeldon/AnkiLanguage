@@ -27,10 +27,7 @@ export default async function PhraseList(
         return <div> Deck does not exist </div>
     }
 
-    // TODO fix any should be TranslationType
-    //
-
-
+    // TODO fix 'any' type should be TranslationType
     let cards = deck.translations.map((translation: any, i: number) =>{
         return <Phrase 
                 key={translation._id}
@@ -47,6 +44,7 @@ export default async function PhraseList(
     return (
         <ul className="
             flex flex-col-reverse  
+            max-w-full
         ">
             {cards}
         </ul>

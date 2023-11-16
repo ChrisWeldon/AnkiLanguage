@@ -43,10 +43,21 @@ export default function Results(
 
             h-8 truncate 
             px-2
-            leading-none border-b-2 border-base3 
+            leading-none 
+            border-b-2 
+            border-base3 
         " >
-            <span className="text-xl pr-4">{input_gender} {result.input.text}</span> 
-            <span className="">{targets}</span> 
+            <span className="
+                text-sm
+                md:text-xl
+                pr-4
+            ">
+                {input_gender} {result.input.text}
+            </span> 
+            <span className="
+                text-xl
+                md:text-normal
+            ">{targets}</span> 
         </div>
     )
 }

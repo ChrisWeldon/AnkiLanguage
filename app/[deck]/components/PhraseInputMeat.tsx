@@ -13,7 +13,12 @@ export default function PhraseInputMeat(props:{phrase:Phrase}){
         language.genders[props.phrase.gender].code() : ""
 
     return (
-        <div className="px-1 justify-self-start flex flex-row items-center">
+        <div className="
+            px-1
+            justify-self-start
+            flex 
+            flex-row 
+            items-center">
             <span>
                 <GenderTag code={gender_code}>{`${gender_mod} `}</GenderTag>
                 {phrase.text}

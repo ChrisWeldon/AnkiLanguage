@@ -56,7 +56,6 @@ export default function DeckPreviewCard(
 function SelectSVG(props: {
         className: string
     }){
-
     return (
         <div className={`${props.className} `}>
             <svg width="3" height="49" viewBox="0 0 3 49" fill="none" xmlns="http://www.w3.org/2000/svg">
