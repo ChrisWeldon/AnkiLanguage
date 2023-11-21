@@ -1,5 +1,6 @@
 'use client';
 
+import InputBar from '@/components/InputBar';
 import React, { Dispatch } from 'react'
 
 export default function AddCardInput(
