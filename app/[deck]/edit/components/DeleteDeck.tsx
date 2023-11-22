@@ -4,14 +4,14 @@ import { DeckModel, DeckType } from '@/models/Deck';
 import IndexCard from "@/components/IndexCard"
 import InputBar from "@/components/InputBar"
 import SubmitButton from '@/components/SubmitButton';
-import { editTitle } from '../actions';
+import { deleteDeck } from '../actions';
 
 import { useFormState } from 'react-dom'
 
-export default function EditTitle({ deck }: { deck: DeckType }, ){
+export default function DeleteDeck({ deck }: { deck: DeckType }, ){
 
 
-    const [state, formAction] = useFormState(editTitle, { message: null })
+    const [state, formAction] = useFormState(deleteDeck, { message: null })
          
     return (
         <IndexCard 
@@ -22,13 +22,13 @@ export default function EditTitle({ deck }: { deck: DeckType }, ){
                 h-64
                 z-100
             `} 
-            title={<h1>Change Title</h1>}
+            title={<h1>Delete Deck</h1>}
         >
             {/*@ts-ignore form actions not fully supported here with TS*/}
             <form action={formAction}>
                 <input type='hidden' name='deck_value' value={deck.value}/>
                 <InputBar 
-                    placeHolder={deck.title}
+                    placeHolder={`type '${deck.value}' to delete`}
                 />
                 <SubmitButton/>
                 <p> {state?.message} </p>

@@ -1,9 +1,11 @@
-import EditTitle from './components/EditTitle'
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';  
 import getDeckByValueSession from '@/lib/database/getDeckByValueSession';
 import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
+
+import EditTitle from './components/EditTitle'
+import DeleteDeck from './components/DeleteDeck'
 
 export default async function EditDeckPage({
     params
@@ -38,10 +40,8 @@ export default async function EditDeckPage({
         ">
             <h1 className='self-center font-extralight text-4xl'> Deck Settings </h1>
 
-            <Suspense fallback={'Loading'}>
-                {/* @ts-expect-error Server Component */}
-                <EditTitle deck={deck} session={session}/>
-            </Suspense>
+            <EditTitle deck={deck} />
+            <DeleteDeck deck={deck} />
         </div>
     )
 }
