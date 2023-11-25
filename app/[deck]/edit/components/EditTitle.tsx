@@ -18,9 +18,8 @@ export default function EditTitle({ title, value }: {title: string, value: strin
     return (
         <IndexCard 
             className={`
-                w-full
                 md:w-1/2
-                m-2
+                md:m-2
                 h-64
                 z-100
             `} 
@@ -31,6 +30,7 @@ export default function EditTitle({ title, value }: {title: string, value: strin
                 <input type='hidden' name='deck_value' value={value}/>
                 <InputBar 
                     placeHolder={title}
+                    className={'text-xl'}
                 />
                 <SubmitButton>
                     {pending ? 'Loading' : 'Submit'}

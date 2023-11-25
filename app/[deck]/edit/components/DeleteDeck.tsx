@@ -17,9 +17,8 @@ export default function DeleteDeck({ value } : { value: string}){
     return (
         <IndexCard 
             className={`
-                w-full
                 md:w-1/2
-                m-2
+                md:m-2
                 h-64
                 z-100
             `} 
@@ -30,6 +29,7 @@ export default function DeleteDeck({ value } : { value: string}){
                 <input type='hidden' name='deck_value' value={value}/>
                 <InputBar 
                     placeHolder={`type '${value}' to delete`}
+                    className={'text-xl'}
                 />
                 <SubmitButton disabled={pending} className='text-red'>
                     {!pending? 'Delete':'Loading'}

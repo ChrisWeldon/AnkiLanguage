@@ -35,6 +35,7 @@ export default async function EditDeckPage({
             flex-col
             content-center
             h-full
+            space-y-2
         ">
             <h1 className='self-center font-extralight text-4xl'> Deck Settings </h1>
 
