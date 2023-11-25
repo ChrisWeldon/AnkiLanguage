@@ -17,6 +17,7 @@ type FormOption = {
 }
 
 export default function NewDeckForm({}){
+    // TODO: use standardized components like SubmitButton and InputBar
 
     const router = useRouter();
     const [message, setMessage] = useState("")

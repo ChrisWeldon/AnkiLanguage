@@ -1,11 +1,10 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';  
 import getDeckByValueSession from '@/lib/database/getDeckByValueSession';
-import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 
 import EditTitle from './components/EditTitle'
-import DeleteDeck from './components/DeleteDeck'
+import DeleteTitle from './components/DeleteDeck'
 
 export default async function EditDeckPage({
     params
@@ -16,7 +15,6 @@ export default async function EditDeckPage({
     }
 
 }){
-
     // @ts-ignore
     const session = await getServerSession(authOptions) 
 
@@ -40,8 +38,8 @@ export default async function EditDeckPage({
         ">
             <h1 className='self-center font-extralight text-4xl'> Deck Settings </h1>
 
-            <EditTitle deck={deck} />
-            <DeleteDeck deck={deck} />
+            <EditTitle value={deck.value} title={deck.title} />
+            <DeleteTitle value={deck.value} />
         </div>
     )
 }

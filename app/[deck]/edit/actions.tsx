@@ -9,11 +9,13 @@ import { redirect } from 'next/navigation'
 import getDeckByValueSession from '@/lib/database/getDeckByValueSession';
 
 
+// pls note that server actions with prevState are passed to useFormStatus
+//      Normally the action would just have a FormData param
 export async function editTitle(prevState: any, data: FormData){
-
+    'use server';
+    
     //@ts-ignore
     const session = await getServerSession(authOptions)
-    console.log(data)
 
     let old_deck_value = `${data.get('deck_value')}`
 
@@ -48,6 +50,34 @@ export async function editTitle(prevState: any, data: FormData){
     redirect(`/${urlConvert(new_title)}/edit`)
 }
 
-export async function deleteDeck(prevState: any, data: formData){
+export async function deleteDeck(prevState: any, data: FormData){
+    'use server';
+    //
+    //@ts-ignore
+    const session = await getServerSession(authOptions)
 
+    let deck_value = `${data.get('deck_value')}`
+
+    if(session == null){
+        return { message: 'User does not exist.'}
+    }
+
+    const deck = await getDeckByValueSession(deck_value, session);
+
+    if(!deck){
+        return { message: 'Deck does not exists'}
+    }
+
+    let check_title = `${data.get('input')}`
+
+    if(check_title===null || urlConvert(check_title)!==deck.value){
+        return { message: 'Please match input exactly'}
+    }
+
+    await DeckModel.findByIdAndDelete(deck._id)
+
+    revalidatePath('/')
+    redirect(`/`)
+
+    return { message: 'done'}
 }

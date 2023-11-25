@@ -1,5 +1,3 @@
-import React from 'react'
-
 
 /*
  * This is a generic InputBar used for server rendered forms
@@ -23,7 +21,9 @@ export default function InputBar(props: {
         id = 'input',
         defaultValue = '',
         placeHolder = ''
+
     } = props
+
 
     return (
         <input 

@@ -1,14 +1,10 @@
-'use client'
-
-// @ts-ignore because types for this hook are still under review
-import { useFormStatus } from 'react-dom'
-
-
-export default function SubmitButton(){
-    const { pending } = useFormStatus()
-
+export default function SubmitButton({className, children, disabled}:{
+    className?: string,
+    disabled?: boolean,
+    children?: JSX.Element | JSX.Element[] | string | string
+}){
     return (
-            <button type='submit' className={`
+            <button disabled={disabled} type='submit' className={`
                     self-center
                     rounded-xl
                     px-2
@@ -21,12 +17,13 @@ export default function SubmitButton(){
                     notebook-input
                     notebook-unfocused
                     text-green
-                    hover:font-light
-                    hover:notebook-hover
-                    active:notebook-focused
+                    ${!disabled ? 'hover:font-light' : ''}
+                    ${!disabled ? 'hover:notebook-hover' : ''}
+                    ${!disabled ? 'active:notebook-focused' : ''}
+                    ${className}
             `} 
             >
-                {pending ? 'Loading' : 'Submit'}
+            {children}
             </button>
        )
 }

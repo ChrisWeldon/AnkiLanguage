@@ -1,8 +1,9 @@
+
 export default function IndexCard(props: {
     className: string,
     title: JSX.Element,
-    children: JSX.Element | JSX.Element[] | string | string
-}): JSX.Element{
+    children: JSX.Element | JSX.Element[] | string
+}){
     return(
         <div className={`
             h-fit
