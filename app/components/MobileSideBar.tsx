@@ -36,6 +36,7 @@ export default function MobileSideBar(props: {
             <div className={`
                 flex
                 flex-col
+                w-full
             `}> 
                 { props.children }
             </div>

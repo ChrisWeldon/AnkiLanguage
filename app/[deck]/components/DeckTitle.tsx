@@ -1,8 +1,13 @@
+'use client'
+import Edit from '@/icons/edit'
+import { SyntheticEvent, useState } from 'react'
+
 export default function DeckTitle(
     props: { // TODO replace with the type definition from translation library
         title: string
     }
 ){
+
     return (
         <h2 className={`
             self-center
@@ -15,9 +20,11 @@ export default function DeckTitle(
             text-4xl
             sm:text-5xl
         `}>
-            <span className="bg-app">
+           <span className="bg-app">
                {props.title} 
            </span>
         </h2>
     )
 }
+
+

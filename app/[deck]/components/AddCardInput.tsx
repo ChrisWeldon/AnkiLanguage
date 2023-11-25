@@ -1,8 +1,7 @@
 'use client';
 
-import React, { Dispatch } from 'react'
-
 export default function AddCardInput(
+    // TODO: use standardized input bar
     props: {
         term: string,
         handleInputChange: (e: any) => void

@@ -1,10 +1,3 @@
-import Phrase from './Phrase'
-import AddCard from './AddCard'
-import DeleteButton from './DeleteButton';
-import { authOptions } from '@/lib/auth';
-import { getServerSession } from 'next-auth';
-import getDeckByValueSession from '@/lib/database/getDeckByValueSession';
-import { redirect } from 'next/navigation';
 import PhraseLoading from './PhraseLoading';
 
 

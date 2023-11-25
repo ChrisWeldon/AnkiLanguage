@@ -48,7 +48,6 @@ export default async function DeckList(props:{ }){
             flex
             flex-col
             font-thin
-
             ">
            {cards}
         </ul>

@@ -1,13 +1,12 @@
 import dbConnect from '@/lib/dbConnect'
 import { Types } from 'mongoose'
 import { DeckModel, DeckType } from '@/models/Deck'
-import { UserModel, UserType } from '@/models/User'
+import { UserModel } from '@/models/User'
 import { TranslationModel } from '@/models/Translation'
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import urlConvert from '@/lib/helpers/urlConvert'
-import { Session } from 'next-auth'
 
 type MessageResponse = {
     message?: string,
@@ -54,7 +53,6 @@ export async function POST(req: NextRequest): Promise<NextResponse<DeckType[] | 
 
     if(!session){
         return NextResponse.json({error: 'No user session'}, {status: 403, statusText: "No User Logged In"})
-
     }
 
     if(!req.body){

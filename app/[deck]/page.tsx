@@ -6,8 +6,10 @@ import PhraseListLoading from './components/PhraseListLoading'
 import DeckTitle from './components/DeckTitle'
 import AddCard from './components/AddCard'
 import AddCardLoading from './components/AddCardLoading'
-import ExportDeck from './components/ExportDeck'
 import LanguageHeader from './components/LanguageHeader'
+import MobileDetect from 'mobile-detect'
+
+import { headers } from 'next/headers'
 
 
 import { getServerSession } from 'next-auth'
@@ -23,6 +25,10 @@ export default async function DeckPage({
         deck: string
     }
 }) {
+
+    const headersInstance = headers()
+    const md = new MobileDetect(headersInstance.get('user-agent') as string)
+    const isMobile = md.mobile() !== null
 
     // TODO: fix this
     // @ts-ignore
