@@ -78,6 +78,4 @@ export async function deleteDeck(prevState: any, data: FormData){
 
     revalidatePath('/')
     redirect(`/`)
-
-    return { message: 'done'}
 }
