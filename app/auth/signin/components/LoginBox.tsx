@@ -41,7 +41,7 @@ export default function LoginBox() {
         <>
         <form className="flex flex-col h-84 xl:max-w-md lined text-2xl font-thin italic px-2" onSubmit={handleSubmit}>
             <label>
-                Username:
+                Email:
                 <input 
                 name="email"
                 type='text'

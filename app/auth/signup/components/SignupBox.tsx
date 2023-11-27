@@ -35,14 +35,22 @@ export default function SignupBox() {
         e.preventDefault()
 
         // No validation of emails yet because the email functions as a usename 
+        //
+        if(!validateEmail(email)){
+            setMessage('Please enter a valid email')
+            setEmail('')
+            setEmail_v('')
+            setPassword('')
+        }
 
         if(email !== email_v){
-            setMessage('Usernames must match must match')
+            setMessage('Emails must match must match')
             setEmail('')
             setEmail_v('')
             setPassword('')
             return
         }
+
 
         if(!validatePassword(password)){
             //Password must be between 6 to 20 characters, \n contain at least one numeric digit, \n one uppercase and one lowercase letter
@@ -79,7 +87,7 @@ export default function SignupBox() {
         <>
         <form className="flex flex-col h-84 xl:max-w-md lined text-2xl font-thin italic px-2" onSubmit={handleSubmit}>
             <label>
-                Username:
+                Email:
                 <input
                 name="username"
                 type='text'
@@ -104,7 +112,7 @@ export default function SignupBox() {
                 "/>
             </label>
             <label>
-                Repeat Username:
+                Repeat Email:
                 <input
                 name="email_v"
                 type='text' 
