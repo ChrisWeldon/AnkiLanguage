@@ -18,10 +18,10 @@ Anki Spaced Repetition Software is great for studying all sorts of things, but s
 2. Export and Study
 
 #### Create a new deck
-![New Deck](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/main/public/ankiweb_newdeck.png)
+![New Deck](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/main/public/ankiweb_newdeck_new.png)
 
 #### Add Cards on the fly
-![Adding Card](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/main/public/ankiweb_addcard.png)
+![Adding Card](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/main/public/ankiweb_addcard_new.png)
 
 #### Export Deck
 ![Exporting Deck](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/main/public/ankiweb_exportdeck.png)
