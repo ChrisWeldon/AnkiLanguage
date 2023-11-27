@@ -1,7 +1,8 @@
-## Anki Language Webapp
-*A webapplication version AnkiTool CLI.*
 
-Anki Spaced Repetition Software is great for studying all sorts of things, but suffers due to generality. Anki Language Webapp takes out the hassle of making anki work for language learners (currently supporting English, German, and French.) Easily create, manage, and export language vocab cards in an immersion setting. While consuming content or traveling in your target language, create vocab cards on the fly without the long pipeline. 
+## ankilanguage.com
+*A webapplication version of AnkiTool CLI.*
+
+Anki Spaced Repetition Software is great for studying all sorts of things, but suffers due to too much generality. Anki Language Webapp takes out the hassle of making anki flashcards for language learners (currently supporting English, German, and French.) Easily create, manage, and export language vocab cards in an immersion setting. While consuming content or traveling in your target language, create vocab cards on the fly without the long pipeline. 
 
 **Old Vocab Card Making Pipeline**
 
@@ -22,10 +23,19 @@ Anki Spaced Repetition Software is great for studying all sorts of things, but s
 #### Add Cards on the fly
 ![Adding Card](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/main/public/ankiweb_addcard.png)
 
+#### Export Deck
+![Exporting Deck](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/main/public/ankiweb_exportdeck.png)
+
+#### Import into Anki Software
+Note: please set import divider to the pipe symbol "|"
+
+![Importing Deck](https://raw.githubusercontent.com/ChrisWeldon/AnkiLanguage/main/public/ankiweb_importdeck.png)
 
 
 
 ## Development
+
+Please feel free to submit a pull request/issue on this project. Any contribution would be greatly appreciated.
 
 This project is built using NextJS 13 App directory framework.
 
@@ -33,8 +43,9 @@ This project is built using NextJS 13 App directory framework.
 - Backend: NextJS API Routing
 - Database: MongoDB
 - Language: Typescript
+- CI/CD and Deployment: Vercel
 
-The authentication solution is written using NextAuth, although this is subject to change given latest NextJS support.
+The authentication solution is written using NextAuth.
 
 This service taps into a number of services to pull translations for target words, some of which will require the use of api developer keys obtained from different suppliers. A DeepL API key and Google Image API keys are recommended but not essential for the opperation of the service. Deepl simply supplies more accurate translation options for phrases and longer vocabulary blocks.
 
@@ -81,5 +92,4 @@ Depending on whichever deployment service you use, the process will be similar t
 npm run build
 npm start
 ```
-
 
